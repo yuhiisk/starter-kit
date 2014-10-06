@@ -1,0 +1,25 @@
+{
+  "name": "gulp-template",
+  "version": "0.0.1",
+  "description": "gulpfile",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "."
+  },
+  "keywords": [
+    "gulp"
+  ],
+  "author": "Youhei Isokawa",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^1.5.2",
+    "gulp": "^3.8.8",
+    "gulp-cache": "^0.2.4",
+    "gulp-if": "^1.2.5",
+    "gulp-imagemin": "^1.0.1",
+    "gulp-jshint": "^1.8.5",
+    "gulp-load-plugins": "^0.7.0",
+    "gulp-size": "^1.1.0",
+    "jshint-stylish": "^1.0.0"
+  }
+}
