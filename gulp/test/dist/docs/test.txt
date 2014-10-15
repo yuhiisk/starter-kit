@@ -1,4 +1,0 @@
-hoge
-foo
-bar
-baz
