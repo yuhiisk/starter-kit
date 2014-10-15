@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
+    bowerFiles = require('main-bower-files'),
 
     AUTOPREFIXER_BROWSERS = [
         'ie >= 10',
@@ -100,30 +101,43 @@ gulp.task('sprite', function() {
 });
 
 
-var root = 'test/src',
-    config = {
-        'path' : {
-            'htdocs': root,
-            'scss': root + '/scss',
-            'sprite': root + '/sprite',
-            'image': root + '/img'
-        }
-    };
+// var root = 'test/src',
+//     config = {
+//         'path' : {
+//             'htdocs': root,
+//             'scss': root + '/scss',
+//             'sprite': root + '/sprite',
+//             'image': root + '/img'
+//         }
+//     };
+//
+// gulp.task('watch', function() {
+//     gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
+//         var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
+//         var spriteData = gulp.src(filePath[1] + filePath[2] + '/*.png')
+//             .pipe(plumber)
+//             .pipe($.spritesmith({
+//                 imgName: filePath[2] + '.png',
+//                 cssName: filePath[2] + '.scss'
+//             }));
+//         spriteData.img.pipe(gulp.dest(config.path.image));
+//         spriteData.css.pipe(gulp.dest(config.path.sass));
+//     })
+// });
 
-gulp.task('watch', function() {
-    gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
-        var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
-        var spriteData = gulp.src(filePath[1] + filePath[2] + '/*.png')
-            .pipe(plumber)
-            .pipe($.spritesmith({
-                imgName: filePath[2] + '.png',
-                cssName: filePath[2] + '.scss'
-            }));
-        spriteData.img.pipe(gulp.dest(config.path.image));
-        spriteData.css.pipe(gulp.dest(config.path.sass));
-    })
+gulp.task('bower', function() {
+    var jsFilter = $.filter('**/*.js'),
+        cssFilter = $.filter('**/*.css');
+
+    return gulp.src(bowerFiles())
+        .pipe(jsFilter)
+        .pipe($.uglify({ preserveComments: 'some' }))
+        .pipe($.concat('lib.min.js'))
+        .pipe(gulp.dest('test/src/js'))
+        .pipe(jsFilter.restore())
+        .pipe(cssFilter)
+        .pipe(gulp.dest('test/src/css'));
 });
-
 
 gulp.task('browser-sync', function() {
     browserSync({
