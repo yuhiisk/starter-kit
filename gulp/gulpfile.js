@@ -71,7 +71,7 @@ gulp.task('copy', function() {
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
-    return gulp.src(['test/src/fonts/**'])
+    gulp.src(['test/src/fonts/**'])
         .pipe(gulp.dest('test/dist/fonts'))
         .pipe($.size({title: 'fonts'}));
 });
@@ -80,6 +80,23 @@ gulp.task('fonts', function () {
 // TODO: continue
 // --------------------------------------------------------
 
+gulp.task('coffee', function() {
+    return gulp.src(['test/src/coffee/*.coffee'])
+        .pipe($.coffee())
+        .pipe(gulp.dest('test/dist/coffee'))
+        .pipe($.size({ title: 'coffee' }))
+});
+
+gulp.task('sprite', function() {
+    var spriteData = gulp.src('test/src/img/sprite/*.png')
+        .pipe($.spritesmith({
+            imgName: 'sprite.png',
+            cssName: 'sprite.scss',
+            padding: 5
+        }));
+    spriteData.img.pipe(gulp.dest('test/dist/img'));
+    spriteData.css.pipe(gulp.dest('test/dist/scss'));
+});
 
 gulp.task('browser-sync', function() {
     browserSync({

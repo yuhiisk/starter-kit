@@ -1,0 +1,87 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+*/
+$blue-x: 0px;
+$blue-y: 0px;
+$blue-offset-x: 0px;
+$blue-offset-y: 0px;
+$blue-width: 22px;
+$blue-height: 22px;
+$blue-total-width: 22px;
+$blue-total-height: 103px;
+$blue-image: 'sprite.png';
+$blue: 0px 0px 0px 0px 22px 22px 22px 103px 'sprite.png';
+$orange-x: 0px;
+$orange-y: 27px;
+$orange-offset-x: 0px;
+$orange-offset-y: -27px;
+$orange-width: 22px;
+$orange-height: 22px;
+$orange-total-width: 22px;
+$orange-total-height: 103px;
+$orange-image: 'sprite.png';
+$orange: 0px 27px 0px -27px 22px 22px 22px 103px 'sprite.png';
+$pink-x: 0px;
+$pink-y: 54px;
+$pink-offset-x: 0px;
+$pink-offset-y: -54px;
+$pink-width: 22px;
+$pink-height: 22px;
+$pink-total-width: 22px;
+$pink-total-height: 103px;
+$pink-image: 'sprite.png';
+$pink: 0px 54px 0px -54px 22px 22px 22px 103px 'sprite.png';
+$yellow-x: 0px;
+$yellow-y: 81px;
+$yellow-offset-x: 0px;
+$yellow-offset-y: -81px;
+$yellow-width: 22px;
+$yellow-height: 22px;
+$yellow-total-width: 22px;
+$yellow-total-height: 103px;
+$yellow-image: 'sprite.png';
+$yellow: 0px 81px 0px -81px 22px 22px 22px 103px 'sprite.png';
+
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
