@@ -96,7 +96,34 @@ gulp.task('sprite', function() {
         }));
     spriteData.img.pipe(gulp.dest('test/dist/img'));
     spriteData.css.pipe(gulp.dest('test/dist/scss'));
+
 });
+
+
+var root = 'test/src',
+    config = {
+        'path' : {
+            'htdocs': root,
+            'scss': root + '/scss',
+            'sprite': root + '/sprite',
+            'image': root + '/img'
+        }
+    };
+
+gulp.task('watch', function() {
+    gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
+        var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
+        var spriteData = gulp.src(filePath[1] + filePath[2] + '/*.png')
+            .pipe(plumber)
+            .pipe($.spritesmith({
+                imgName: filePath[2] + '.png',
+                cssName: filePath[2] + '.scss'
+            }));
+        spriteData.img.pipe(gulp.dest(config.path.image));
+        spriteData.css.pipe(gulp.dest(config.path.sass));
+    })
+});
+
 
 gulp.task('browser-sync', function() {
     browserSync({
