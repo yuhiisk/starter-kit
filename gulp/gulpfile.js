@@ -5,8 +5,11 @@
 
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
+    del = require('del'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
+    runSequence = require('run-sequence'),
+    pagespeed = require('psi'),
 
     AUTOPREFIXER_BROWSERS = [
         'ie >= 10',
@@ -43,7 +46,7 @@ gulp.task('images', function () {
             interlaced: true
         })))
         .pipe(gulp.dest('test/dist/images'))
-        .pipe($.size({title: 'images'}));
+        .pipe($.size({ title: 'images' }));
 });
 
 // Copy All Files At The Root Level (app)
@@ -59,44 +62,165 @@ gulp.task('images', function () {
 // });
 
 // Copy basic
-gulp.task('copy', function() {
+gulp.task('copy', function () {
     // src/docsディレクトリのコピー
-    gulp.src('test/src/docs/**').
-        pipe(gulp.dest('test/dist/docs'));
+    gulp.src('test/src/docs/**')
+        .pipe(gulp.dest('test/dist/docs'));
 
     // src/htmlディレクトリのコピー
-    gulp.src('test/src/html/**').
-        pipe(gulp.dest('test/dist/html'));
+    gulp.src('test/src/html/**')
+        .pipe(gulp.dest('test/dist/html'));
 });
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
     return gulp.src(['test/src/fonts/**'])
         .pipe(gulp.dest('test/dist/fonts'))
-        .pipe($.size({title: 'fonts'}));
+        .pipe($.size({ title: 'fonts' }));
 });
+
+// Compile and Automatically Prefix Stylesheets
+gulp.task('styles', function () {
+    // For best performance, don't add Sass partials to `gulp.src`
+    return gulp.src([
+        'test/src/scss/*.scss',
+        'test/src/scss/**/*.scss',
+        'test/src/scss/components/components.scss'
+    ])
+        .pipe($.changed('styles', { extension: '.scss' }))
+        .pipe($.rubySass({
+            style: 'expanded',
+            precision: 10
+        }))
+        .on('error', console.error.bind(console))
+        .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
+        .pipe(gulp.dest('.tmp/scss'))
+        // Concatenate And Minify Styles
+        .pipe($.if('*.css', $.csso()))
+        .pipe(gulp.dest('test/dist/css'))
+        .pipe($.size({ title: 'styles' }));
+});
+
+// Scan Your HTML For Assets & Optimize Them
+gulp.task('html', function () {
+    var assets = $.useref.assets({ searchPath: '{.tmp, test/src}' });
+
+    return gulp.src('test/src/{,**/}*.html')
+        .pipe(assets)
+        // Concatenate And Minify JavaScript
+        .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
+        // Remove Any Unused CSS
+        // Note: If not using the Style Guide, you can delete it from
+        // the next line to only include styles your project uses.
+        .pipe($.if('*.css', $.uncss({
+            html: [
+                'src/index.html',
+                'src/styleguide.html'
+            ],
+            // CSS Selectors for UnCSS to ignore
+            ignore: [
+                /.navdrawer-container.open/,
+                /.app-bar.open/
+            ]
+        })))
+        // Concatenate And Minify Styles
+        // In case you are still using useref build blocks
+        .pipe($.if('*.css', $.csso()))
+        .pipe(assets.restore())
+        .pipe($.useref())
+        // Update Production Style Guide Paths
+        .pipe($.replace('components/components.css', 'components/main.min.css'))
+        // Minify Any HTML
+        .pipe($.if('*.html', $.minifyHtml()))
+        // Output Files
+        .pipe(gulp.dest('test/dist'))
+        .pipe($.size({ title: 'html' }));
+});
+
+// Clean Output Directory
+gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+
+// Watch Files For Changes & Reload
+gulp.task('serve', ['styles'], function () {
+    browserSync({
+        notify: false,
+        // Customize the BrowserSync console logging prefix
+        logPrefix: 'WSK',
+        // Run as an https by uncommenting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        // https: true,
+        server: ['test/.tmp', 'test/src']
+    });
+
+    gulp.watch(['test/src/**/*.html'], reload);
+    gulp.watch(['test/src/scss/**/*.{scss, css}'], ['styles', reload]);
+    gulp.watch(['test/src/js/**/*.js'], ['jshint']);
+    gulp.watch(['test/src/img/**/*'], reload);
+});
+
+// Build and serve the output from the dist build
+gulp.task('serve:dist', ['default'], function () {
+    browserSync({
+        notify: false,
+        logPrefix: 'WSK',
+        // Run as an https by uncommenting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        // https: true,
+        server: 'test/dist'
+    });
+});
+
+// Build Production Files, the Default Task
+gulp.task('default', ['clean'], function (cb) {
+    runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+});
+
+// Run PageSpeed Insights
+// Update `url` below to the public URL for your site
+gulp.task('pagespeed', pagespeed.bind(null, {
+    // By default, we use the PageSpeed Insights
+    // free (no API key) tier. You can use a Google
+    // Developer API key if you have one. See
+    // http://goo.gl/RkN0vE for info key: 'YOUR_API_KEY'
+    url: 'https://example.com',
+    strategy: 'mobile'
+}));
+
+// Load custom tasks from the `tasks` directory
+// try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
 
 // --------------------------------------------------------
 // TODO: continue
 // --------------------------------------------------------
-
-
-gulp.task('browser-sync', function() {
-    browserSync({
-        server: {
-            baseDir: "test/src/html/"
-        }
-    });
-});
-
-gulp.task('bs-reload', function() {
-    reload();
-})
+// bower
+// compass
+// csscomb
+// coffeescript
+// concat
+// spritesmith
 
 
 
-// commands
-gulp.task('default', ['browser-sync'], function() {
-    gulp.watch('test/src/html/*.html', ['bs-reload']);
-});
+
+
+// gulp.task('browser-sync', function() {
+//     browserSync({
+//         server: {
+//             baseDir: "test/src/html/"
+//         }
+//     });
+// });
+//
+// gulp.task('bs-reload', function() {
+//     reload();
+// })
+//
+//
+//
+// // commands
+// gulp.task('default', ['browser-sync'], function() {
+//     gulp.watch('test/src/html/*.html', ['bs-reload']);
+// });
 gulp.task('deploy', [], function() { });
