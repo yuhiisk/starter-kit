@@ -144,7 +144,7 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 gulp.task('coffee', function() {
     return gulp.src(['test/src/coffee/*.coffee'])
         .pipe($.coffee({ bare: true }))
-        .pipe(gulp.dest('test/dist/coffee'))
+        .pipe(gulp.dest('test/src/js'))
         .pipe($.size({ title: 'coffee' }))
 });
 
@@ -215,7 +215,7 @@ gulp.task('serve', ['styles'], function () {
 
     gulp.watch(['test/src/**/*.html'], reload);
     gulp.watch(['test/src/scss/**/*.{scss, css}'], ['styles', reload]);
-    gulp.watch(['test/src/js/**/*.js'], ['jshint']);
+    gulp.watch(['test/src/js/*.js'], ['jshint']);
     gulp.watch(['test/src/img/**/*'], reload);
 });
 

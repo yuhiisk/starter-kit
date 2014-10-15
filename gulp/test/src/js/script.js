@@ -1,11 +1,5 @@
-/**
- *
- */
-;(function(win, doc, $) {
-
-    $(function () {
-        console.log('hello world!');
-    });
-
-})(this, this.document, jQuery);
-
+(function(win, doc) {
+  'use strict';
+  console.log("hello world!");
+  return $(function() {});
+})(this, this.document);
