@@ -83,7 +83,7 @@ gulp.task('fonts', function () {
 
 gulp.task('coffee', function() {
     return gulp.src(['test/src/coffee/*.coffee'])
-        .pipe($.coffee())
+        .pipe($.coffee({ bare: true }))
         .pipe(gulp.dest('test/dist/coffee'))
         .pipe($.size({ title: 'coffee' }))
 });
