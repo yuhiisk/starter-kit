@@ -1,0 +1,31 @@
+{
+	"indent"    : 4,
+	"strict"    : true,
+	"asi"       : true,
+	"browser"   : true,
+	"camelcase" : true,
+	"curly"     : true,
+	"evil"      : true,
+	"unused"    : true,
+	"eqeqeq"    : true,
+	"expr"      : true,
+	"es3"       : true,
+	"freeze"    : true,
+	"laxcomma"  : true,
+	"loopfunc"  : true,
+	"multistr"  : true,
+	"notypeof"  : true,
+	"proto"     : true,
+	"undef"     : true,
+	"smarttabs" : true,
+	"trailing"  : true,
+	"devel"     : true,
+	"jquery"    : true,
+	"node"      : true,
+	"worker"    : true,
+
+	"globals"   : {
+		"_"     : false,
+		"Backbone": false
+	}
+}
