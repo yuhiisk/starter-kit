@@ -111,12 +111,17 @@ gulp.task('styles', function () {
             style: 'expanded',
             precision: 10
         }))
+        // .pipe($.compass({
+        //     config_file: './config.rb',
+        //     css: 'css',
+        //     sass: 'scss'
+        // }))
         .on('error', console.error.bind(console))
         .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
         .pipe(gulp.dest('.tmp/scss'))
         // Concatenate And Minify Styles
         .pipe($.if('*.css', $.csscomb()))
-        .pipe($.if('*.css', $.csso()))
+        // .pipe($.if('*.css', $.csso()))
         .pipe(gulp.dest('test/dist/css'))
         .pipe($.size({ title: 'styles' }));
 });
