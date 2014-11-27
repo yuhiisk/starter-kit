@@ -1,5 +1,10 @@
 /**
  * my gulpfile
+ *
+ * TODO:
+ * * CSScomb lists
+ * * sprites
+ *
  */
 'use strict';
 
@@ -24,6 +29,17 @@ var gulp = require('gulp'),
         'bb >= 10'
     ];
 
+
+var root = 'test/src',
+    config = {
+        'path' : {
+            'htdocs': root,
+            'scss': root + '/scss',
+            'sprite': root + '/sprite',
+            'image': root + '/img'
+        }
+    };
+
 // template task
 // gulp.task('myTask', [], function() {
 //     console.log('something.');
@@ -33,6 +49,7 @@ var gulp = require('gulp'),
 // Lint Javascript
 gulp.task('jshint', function () {
     return gulp.src('test/src/js/**/*.js')
+        .pipe($.plumber())
         .pipe(reload({ stream: true, once: true }))
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
@@ -88,6 +105,7 @@ gulp.task('styles', function () {
         'test/src/scss/**/*.scss',
         'test/src/scss/components/components.scss'
     ])
+        .pipe($.plumber())
         .pipe($.changed('styles', { extension: '.scss' }))
         .pipe($.rubySass({
             style: 'expanded',
@@ -97,6 +115,7 @@ gulp.task('styles', function () {
         .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
         .pipe(gulp.dest('.tmp/scss'))
         // Concatenate And Minify Styles
+        .pipe($.if('*.css', $.csscomb()))
         .pipe($.if('*.css', $.csso()))
         .pipe(gulp.dest('test/dist/css'))
         .pipe($.size({ title: 'styles' }));
@@ -107,6 +126,7 @@ gulp.task('html', function () {
     var assets = $.useref.assets({ searchPath: '{.tmp, test/src}' });
 
     return gulp.src('test/src/{,**/}*.html')
+        .pipe($.plumber())
         .pipe(assets)
         // Concatenate And Minify JavaScript
         .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
@@ -143,13 +163,26 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 gulp.task('coffee', function() {
     return gulp.src(['test/src/coffee/*.coffee'])
+        .pipe($.plumber())
         .pipe($.coffee({ bare: true }))
         .pipe(gulp.dest('test/src/js'))
         .pipe($.size({ title: 'coffee' }))
 });
 
+gulp.task('typescript', function() {
+    return gulp.src(['test/src/ts/*.ts'])
+        .pipe($.plumber())
+        .pipe($.tsc({
+            sourcemap: true,
+            sourceRoot: '../ts'
+        }))
+        .pipe(gulp.dest('test/src/js'))
+        .pipe($.size({ title: 'typescript' }))
+});
+
 gulp.task('sprite', function() {
     var spriteData = gulp.src('test/src/img/sprite/*.png')
+        .pipe($.plumber())
         .pipe($.spritesmith({
             imgName: 'sprite.png',
             cssName: 'sprite.scss',
@@ -175,6 +208,7 @@ gulp.task('sprite', function() {
 //     gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
 //         var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
 //         var spriteData = gulp.src(filePath[1] + filePath[2] + '/*.png')
+//             .pipe($.plumber())
 //             .pipe(plumber)
 //             .pipe($.spritesmith({
 //                 imgName: filePath[2] + '.png',
@@ -215,6 +249,8 @@ gulp.task('serve', ['styles'], function () {
 
     gulp.watch(['test/src/**/*.html'], reload);
     gulp.watch(['test/src/scss/**/*.{scss, css}'], ['styles', reload]);
+    gulp.watch(['test/src/ts/{**/,}*.ts'], ['typescript']);
+    // gulp.watch(['test/src/coffee/{**/,}*.coffee'], ['coffee']);
     gulp.watch(['test/src/js/*.js'], ['jshint']);
     gulp.watch(['test/src/img/**/*'], reload);
 });
@@ -251,29 +287,6 @@ gulp.task('pagespeed', pagespeed.bind(null, {
 // Load custom tasks from the `tasks` directory
 // try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
 
-// --------------------------------------------------------
-// TODO: continue
-// --------------------------------------------------------
-// compass
-// csscomb
 
 
-// gulp.task('browser-sync', function() {
-//     browserSync({
-//         server: {
-//             baseDir: "test/src/html/"
-//         }
-//     });
-// });
-//
-// gulp.task('bs-reload', function() {
-//     reload();
-// })
-//
-//
-//
-// // commands
-// gulp.task('default', ['browser-sync'], function() {
-//     gulp.watch('test/src/html/*.html', ['bs-reload']);
-// });
 gulp.task('deploy', [], function() { });
