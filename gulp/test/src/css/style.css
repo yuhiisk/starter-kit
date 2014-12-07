@@ -1,13 +1,19 @@
 .list-alfabet {
-    color: black;
+  color: black;
 }
 
 .list-string {
-    font-size: 13px;
-
-    color: gray;
+  color: gray;
+  font-size: 13px;
 }
 
 .source {
-    color: black;
+  color: black;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.test {
+  -webkit-transform: scale(3);
+          transform: scale(3);
 }

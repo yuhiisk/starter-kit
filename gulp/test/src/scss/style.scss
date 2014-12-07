@@ -3,12 +3,18 @@
 .list-alfabet {
   color: black;
 }
+
 .list-string {
   color: gray;
   font-size: 13px;
 }
 
-
 .source {
   color: black;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.test {
+  transform: scale(3);
 }

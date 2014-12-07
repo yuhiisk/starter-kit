@@ -3,23 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>test gulp</title>
-<link rel="stylesheet" href="css/style.css" media="all" />
+<!-- build:css css/style.min.css -->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/style.css">
+<!-- endbuild -->
 </head>
 <body>
-<h1>Hello World!</h1>
-<h2>It works!</h2>
-<p>hello, gulp!</p>
-<ul class="list-alfabet">
-<li>a</li>
-<li>b</li>
-<li>c</li>
-</ul>
-<ul class="list-string">
-<li>hoge</li>
-<li>foo</li>
-<li>bar</li>
-<li>baz</li>
-</ul>
+    <h1>Hello World!</h1>
+    <h2>It works!</h2>
+    <p>hello, gulp!</p>
+    <ul class="list-alfabet">
+      <li>a</li>
+      <li>b</li>
+      <li>c</li>
+    </ul>
+    <ul class="list-string">
+      <li>hoge</li>
+      <li>foo</li>
+      <li>bar</li>
+      <li>baz</li>
+    </ul>
+
+    <!-- build:js js/main.min.js -->
+    <script src="js/lib.min.js"></script>
+    <script src="js/hello.js"></script>
+    <script src="js/todos.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
 

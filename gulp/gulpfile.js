@@ -3,14 +3,16 @@
  *
  * TODO:
  * * sprites
- * * minify
+ * * minify(html, useref)
  * * deploy task
  * * error handling
+ * * delete sourcemap option
  *
  */
 'use strict';
 
 var gulp = require('gulp'),
+    sass = require('gulp-ruby-sass'),
     $ = require('gulp-load-plugins')(),
     del = require('del'),
     bowerFiles = require('main-bower-files'),
@@ -20,7 +22,7 @@ var gulp = require('gulp'),
     reload = browserSync.reload,
 
     pagespeed = require('psi'),
-    PAGESPEED_TARGET_URL = 'http://blog.yuhiisk.com/',
+    PAGESPEED_TARGET_URL = 'http://example.com/',
 
     AUTOPREFIXER_BROWSERS = [
         'ie >= 10',
@@ -48,7 +50,7 @@ var gulp = require('gulp'),
             'fonts': root + 'fonts/',
 
             'docs': root + 'docs/',
-            'dist': root + 'dist/'
+            'dist': 'test/dist/'
         }
     };
 
@@ -108,17 +110,15 @@ gulp.task('fonts', function () {
 gulp.task('styles', function () {
     // For best performance, don't add Sass partials to `gulp.src`
     return gulp.src([
-        config.path.scss + '{,**/}*.scss'
-        // ,
-        // config.path.scss + '**/*.scss'
+        config.path.scss + '*.scss'
     ])
         .pipe($.plumber())
         .pipe($.changed('styles', { extension: '.scss' }))
         .pipe($.rubySass({
             style: 'expanded',
-            precision: 10,
-            sourcemap: false
+            precision: 10
         }))
+        // Use compass
         // .pipe($.compass({
         //     config_file: './config.rb',
         //     css: 'css',
@@ -128,7 +128,7 @@ gulp.task('styles', function () {
         .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
         .pipe(gulp.dest('.tmp/scss'))
         // Concatenate And Minify Styles
-        .pipe($.if('*.css', $.csscomb()))
+        // .pipe($.if('*.css', $.csscomb()))
         // .pipe($.if('*.css', $.csso()))
         .pipe(gulp.dest(config.path.css))
         .pipe($.size({ title: 'styles' }));
@@ -138,7 +138,7 @@ gulp.task('styles', function () {
 gulp.task('html', function () {
     var assets = $.useref.assets({ searchPath: '{.tmp, ' + config.path.htdocs + '}' });
 
-    return gulp.src(config.path.htdocs + '{,**/}*.html')
+    return gulp.src(config.path.htdocs + '*.html')
         .pipe($.plumber())
         .pipe(assets)
         // Concatenate And Minify JavaScript
@@ -169,6 +169,41 @@ gulp.task('html', function () {
         // Output Files
         .pipe(gulp.dest(config.path.dist))
         .pipe($.size({ title: 'html' }));
+});
+
+gulp.task('minify:html', function() {
+    var assets = $.useref.assets({ searchPath: '{.tmp, ' + config.path.htdocs + '}' });
+
+    return gulp.src(config.path.htdocs + '*.html')
+        .pipe($.plumber())
+        // Minify Any HTML
+        .pipe($.if('*.html', $.minifyHtml()))
+        // Output Files
+        .pipe(gulp.dest(config.path.dist))
+        .pipe($.size({ title: 'minify:html' }));
+});
+
+gulp.task('minify:styles', function () {
+    // For best performance, don't add Sass partials to `gulp.src`
+    return gulp.src([
+        config.path.css + '*.css'
+    ])
+        .pipe($.plumber())
+        // Concatenate And Minify Styles
+        .pipe($.if('*.css', $.csscomb()))
+        .pipe($.if('*.css', $.csso()))
+        .pipe(gulp.dest(config.path.dist + 'css'))
+        .pipe($.size({ title: 'minify:styles' }));
+});
+
+gulp.task('minify:scripts', function () {
+    return gulp.src(config.path.js + '*.js')
+        .pipe($.plumber())
+        // Concatenate And Minify JavaScript
+        .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
+        // Output Files
+        .pipe(gulp.dest(config.path.dist + 'js'))
+        .pipe($.size({ title: 'minify:js' }));
 });
 
 // Clean Output Directory
@@ -251,8 +286,8 @@ gulp.task('serve', ['styles'], function () {
 
     gulp.watch([config.path.htdocs + '**/*.html'], reload);
     gulp.watch([config.path.scss + '**/*.{scss, css}'], ['styles', reload]);
-    gulp.watch([config.path.ts + '{**/,}*.ts'], ['typescript']);
-    gulp.watch([config.path.coffee + '{**/,}*.coffee'], ['coffee']);
+    gulp.watch([config.path.ts + '**/*.ts'], ['typescript']);
+    gulp.watch([config.path.coffee + '**/*.coffee'], ['coffee']);
     gulp.watch([config.path.js + '*.js'], ['jshint']);
     gulp.watch([config.path.image + '**/*'], reload);
 });
@@ -272,10 +307,16 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-    runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+    runSequence('styles', ['jshint', 'images', 'fonts', 'copy'], cb);
 });
 
-gulp.task('deploy', [], function() { });
+gulp.task('deploy', ['clean'], function(cb) {
+    runSequence(
+      ['styles', 'coffee', 'typescript'],
+      ['jshint', 'images', 'html', 'fonts', 'copy'],
+      cb
+    );
+});
 
 // Run PageSpeed Insights
 // Update `url` below to the public URL for your site
