@@ -2,8 +2,10 @@
  * my gulpfile
  *
  * TODO:
- * * CSScomb lists
  * * sprites
+ * * minify
+ * * deploy task
+ * * error handling
  *
  */
 'use strict';
@@ -11,11 +13,14 @@
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     del = require('del'),
-    browserSync = require('browser-sync'),
-    reload = browserSync.reload,
     bowerFiles = require('main-bower-files'),
     runSequence = require('run-sequence'),
+
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload,
+
     pagespeed = require('psi'),
+    PAGESPEED_TARGET_URL = 'http://blog.yuhiisk.com/',
 
     AUTOPREFIXER_BROWSERS = [
         'ie >= 10',
@@ -27,28 +32,30 @@ var gulp = require('gulp'),
         'ios >= 7',
         'android >= 4.4',
         'bb >= 10'
-    ];
+    ],
 
-
-var root = 'test/src',
+    root = 'test/src/',
     config = {
         'path' : {
             'htdocs': root,
-            'scss': root + '/scss',
-            'sprite': root + '/sprite',
-            'image': root + '/img'
+            'css': root + 'css/',
+            'scss': root + 'scss/',
+            'js': root + 'js/',
+            'coffee': root + 'coffee/',
+            'ts': root + 'ts/',
+            'image': root + 'img/',
+            'sprite': root + 'sprite/',
+            'fonts': root + 'fonts/',
+
+            'docs': root + 'docs/',
+            'dist': root + 'dist/'
         }
     };
-
-// template task
-// gulp.task('myTask', [], function() {
-//     console.log('something.');
-// });
 
 
 // Lint Javascript
 gulp.task('jshint', function () {
-    return gulp.src('test/src/js/**/*.js')
+    return gulp.src(config.path.js + '**/*.js')
         .pipe($.plumber())
         .pipe(reload({ stream: true, once: true }))
         .pipe($.jshint())
@@ -58,12 +65,12 @@ gulp.task('jshint', function () {
 
 // Optimize Images
 gulp.task('images', function () {
-    return gulp.src('test/src/images/**/*')
+    return gulp.src(config.path.image + '**/*')
         .pipe($.cache($.imagemin({
             progressive: true,
             interlaced: true
         })))
-        .pipe(gulp.dest('test/dist/images'))
+        .pipe(gulp.dest(config.path.dist + 'images'))
         .pipe($.size({ title: 'images' }));
 });
 
@@ -81,19 +88,19 @@ gulp.task('images', function () {
 
 // Copy basic
 gulp.task('copy', function () {
-    // src/docsディレクトリのコピー
-    gulp.src('test/src/docs/**')
-        .pipe(gulp.dest('test/dist/docs'));
+   // // src/docsディレクトリのコピー
+   // gulp.src(config.path.docs + '**')
+   //     .pipe(gulp.dest(config.path.dist + 'docs'));
 
-    // src/htmlディレクトリのコピー
-    gulp.src('test/src/html/**')
-        .pipe(gulp.dest('test/dist/html'));
+   // // src/htmlディレクトリのコピー
+   // gulp.src(config.path.htdocs + 'html/**')
+   //     .pipe(gulp.dest(config.path.dist + 'html'));
 });
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
-    gulp.src(['test/src/fonts/**'])
-        .pipe(gulp.dest('test/dist/fonts'))
+    gulp.src([config.path.fonts + '**'])
+        .pipe(gulp.dest(config.path.fonts))
         .pipe($.size({ title: 'fonts' }));
 });
 
@@ -101,15 +108,16 @@ gulp.task('fonts', function () {
 gulp.task('styles', function () {
     // For best performance, don't add Sass partials to `gulp.src`
     return gulp.src([
-        'test/src/scss/*.scss',
-        'test/src/scss/**/*.scss',
-        'test/src/scss/components/components.scss'
+        config.path.scss + '{,**/}*.scss'
+        // ,
+        // config.path.scss + '**/*.scss'
     ])
         .pipe($.plumber())
         .pipe($.changed('styles', { extension: '.scss' }))
         .pipe($.rubySass({
             style: 'expanded',
-            precision: 10
+            precision: 10,
+            sourcemap: false
         }))
         // .pipe($.compass({
         //     config_file: './config.rb',
@@ -122,15 +130,15 @@ gulp.task('styles', function () {
         // Concatenate And Minify Styles
         .pipe($.if('*.css', $.csscomb()))
         // .pipe($.if('*.css', $.csso()))
-        .pipe(gulp.dest('test/dist/css'))
+        .pipe(gulp.dest(config.path.css))
         .pipe($.size({ title: 'styles' }));
 });
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
-    var assets = $.useref.assets({ searchPath: '{.tmp, test/src}' });
+    var assets = $.useref.assets({ searchPath: '{.tmp, ' + config.path.htdocs + '}' });
 
-    return gulp.src('test/src/{,**/}*.html')
+    return gulp.src(config.path.htdocs + '{,**/}*.html')
         .pipe($.plumber())
         .pipe(assets)
         // Concatenate And Minify JavaScript
@@ -140,14 +148,14 @@ gulp.task('html', function () {
         // the next line to only include styles your project uses.
         .pipe($.if('*.css', $.uncss({
             html: [
-                'src/index.html',
-                'src/styleguide.html'
+                config.path.htdocs + 'index.html',
+                config.path.htdocs + 'styleguide.html'
             ],
             // CSS Selectors for UnCSS to ignore
-            ignore: [
-                /.navdrawer-container.open/,
-                /.app-bar.open/
-            ]
+            // ignore: [
+            //     /.navdrawer-container.open/,
+            //     /.app-bar.open/
+            // ]
         })))
         // Concatenate And Minify Styles
         // In case you are still using useref build blocks
@@ -155,60 +163,49 @@ gulp.task('html', function () {
         .pipe(assets.restore())
         .pipe($.useref())
         // Update Production Style Guide Paths
-        .pipe($.replace('components/components.css', 'components/main.min.css'))
+        // .pipe($.replace('components/components.css', 'components/main.min.css'))
         // Minify Any HTML
         .pipe($.if('*.html', $.minifyHtml()))
         // Output Files
-        .pipe(gulp.dest('test/dist'))
+        .pipe(gulp.dest(config.path.dist))
         .pipe($.size({ title: 'html' }));
 });
 
 // Clean Output Directory
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('clean', del.bind(null, [ '.tmp', config.path.dist ]));
 
 gulp.task('coffee', function() {
-    return gulp.src(['test/src/coffee/*.coffee'])
+    return gulp.src([config.path.coffee + '*.coffee'])
         .pipe($.plumber())
         .pipe($.coffee({ bare: true }))
-        .pipe(gulp.dest('test/src/js'))
+        .pipe(gulp.dest(config.path.js))
         .pipe($.size({ title: 'coffee' }))
 });
 
 gulp.task('typescript', function() {
-    return gulp.src(['test/src/ts/*.ts'])
+    return gulp.src([config.path.ts + '*.ts'])
         .pipe($.plumber())
         .pipe($.tsc({
             sourcemap: true,
             sourceRoot: '../ts'
         }))
-        .pipe(gulp.dest('test/src/js'))
+        .pipe(gulp.dest(config.path.js))
         .pipe($.size({ title: 'typescript' }))
 });
 
 gulp.task('sprite', function() {
-    var spriteData = gulp.src('test/src/img/sprite/*.png')
+    var spriteData = gulp.src(config.path.sprite + '*.png')
         .pipe($.plumber())
         .pipe($.spritesmith({
             imgName: 'sprite.png',
             cssName: 'sprite.scss',
             padding: 5
         }));
-    spriteData.img.pipe(gulp.dest('test/dist/img'));
-    spriteData.css.pipe(gulp.dest('test/dist/scss'));
+    spriteData.img.pipe(gulp.dest(config.path.dist + 'img'));
+    spriteData.css.pipe(gulp.dest(config.path.dist + 'scss'));
 
 });
 
-
-// var root = 'test/src',
-//     config = {
-//         'path' : {
-//             'htdocs': root,
-//             'scss': root + '/scss',
-//             'sprite': root + '/sprite',
-//             'image': root + '/img'
-//         }
-//     };
-//
 // gulp.task('watch', function() {
 //     gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
 //         var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
@@ -232,10 +229,10 @@ gulp.task('bower', function() {
         .pipe(jsFilter)
         .pipe($.uglify({ preserveComments: 'some' }))
         .pipe($.concat('lib.min.js'))
-        .pipe(gulp.dest('test/src/js'))
+        .pipe(gulp.dest(config.path.js))
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
-        .pipe(gulp.dest('test/src/css'));
+        .pipe(gulp.dest(config.path.css));
 });
 
 
@@ -249,15 +246,15 @@ gulp.task('serve', ['styles'], function () {
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
-        server: ['test/.tmp', 'test/src']
+        server: [ 'test/.tmp', config.path.htdocs ]
     });
 
-    gulp.watch(['test/src/**/*.html'], reload);
-    gulp.watch(['test/src/scss/**/*.{scss, css}'], ['styles', reload]);
-    gulp.watch(['test/src/ts/{**/,}*.ts'], ['typescript']);
-    // gulp.watch(['test/src/coffee/{**/,}*.coffee'], ['coffee']);
-    gulp.watch(['test/src/js/*.js'], ['jshint']);
-    gulp.watch(['test/src/img/**/*'], reload);
+    gulp.watch([config.path.htdocs + '**/*.html'], reload);
+    gulp.watch([config.path.scss + '**/*.{scss, css}'], ['styles', reload]);
+    gulp.watch([config.path.ts + '{**/,}*.ts'], ['typescript']);
+    gulp.watch([config.path.coffee + '{**/,}*.coffee'], ['coffee']);
+    gulp.watch([config.path.js + '*.js'], ['jshint']);
+    gulp.watch([config.path.image + '**/*'], reload);
 });
 
 // Build and serve the output from the dist build
@@ -269,7 +266,7 @@ gulp.task('serve:dist', ['default'], function () {
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
-        server: 'test/dist'
+        server: config.path.dist
     });
 });
 
@@ -278,6 +275,8 @@ gulp.task('default', ['clean'], function (cb) {
     runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
 });
 
+gulp.task('deploy', [], function() { });
+
 // Run PageSpeed Insights
 // Update `url` below to the public URL for your site
 gulp.task('pagespeed', pagespeed.bind(null, {
@@ -285,7 +284,7 @@ gulp.task('pagespeed', pagespeed.bind(null, {
     // free (no API key) tier. You can use a Google
     // Developer API key if you have one. See
     // http://goo.gl/RkN0vE for info key: 'YOUR_API_KEY'
-    url: 'https://example.com',
+    url: PAGESPEED_TARGET_URL,
     strategy: 'mobile'
 }));
 
@@ -293,5 +292,7 @@ gulp.task('pagespeed', pagespeed.bind(null, {
 // try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
 
 
-
-gulp.task('deploy', [], function() { });
+// task template
+// gulp.task('myTask', [], function() {
+//     console.log('something.');
+// });
