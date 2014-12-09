@@ -9,7 +9,7 @@
     "normalize-css": null,
     "modernizr": null,
     "html5-boilerplate": null,
-    "jquery": "1.11.1",
+    "jquery": "2.1.1",
     "underscore": "~1.7.0"
   },
   "overrides": {
