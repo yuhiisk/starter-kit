@@ -1,24 +1,20 @@
 @charset 'utf-8';
 
-.test {
-    color: #333;
+.list-alfabet {
+  color: black;
 }
-.radius {
-    border-radius: 3px;
-}
-.transform {
-    transform: translate3d(0, 0, 0);
 
-    .test {
-        transform: rotate(30deg);
-    }
+.list-string {
+  color: gray;
+  font-size: 13px;
 }
-.hello {
-    color: black;
-    display: none;
+
+.source {
+  color: black;
+  font-size: 10px;
+  cursor: pointer;
 }
-.hogehoge
-{
-    transition: opacity 0.5s ease;
-    color: tomato;
+
+.test {
+  transform: scale(3);
 }
