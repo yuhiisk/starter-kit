@@ -41,11 +41,7 @@ var gulp = require('gulp'),
     config = {
         'path' : {
             'htdocs': root,
-<<<<<<< HEAD
             'dist': 'test/dist/',
-
-=======
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
             'css': root + 'css/',
             'scss': root + 'scss/',
             'js': root + 'js/',
@@ -55,12 +51,7 @@ var gulp = require('gulp'),
             'sprite': root + 'sprite/',
             'fonts': root + 'fonts/',
 
-<<<<<<< HEAD
             'docs': root + 'docs/'
-=======
-            'docs': root + 'docs/',
-            'dist': 'test/dist/'
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
         }
     };
 
@@ -84,11 +75,7 @@ gulp.task('images', function () {
             progressive: true,
             interlaced: true
         })))
-<<<<<<< HEAD
         .pipe(gulp.dest(config.path.dist + 'img'))
-=======
-        .pipe(gulp.dest(config.path.dist + 'images'))
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
         .pipe($.size({ title: 'images' }));
 });
 
@@ -97,6 +84,10 @@ gulp.task('copy', function () {
     return gulp.src([
         config.path.htdocs + '**',
         '!' + config.path.htdocs + '**/*.html',
+        '!' + config.path.css,
+        '!' + config.path.css + '**',
+        '!' + config.path.js,
+        '!' + config.path.js + '**',
         '!' + config.path.scss,
         '!' + config.path.scss + '**',
         '!' + config.path.coffee,
@@ -113,11 +104,7 @@ gulp.task('copy', function () {
 });
 
 // Copy basic
-<<<<<<< HEAD
 // gulp.task('copy', function () {
-=======
-gulp.task('copy', function () {
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
    // // src/docsディレクトリのコピー
    // gulp.src(config.path.docs + '**')
    //     .pipe(gulp.dest(config.path.dist + 'docs'));
@@ -125,11 +112,7 @@ gulp.task('copy', function () {
    // // src/htmlディレクトリのコピー
    // gulp.src(config.path.htdocs + 'html/**')
    //     .pipe(gulp.dest(config.path.dist + 'html'));
-<<<<<<< HEAD
 // });
-=======
-});
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
@@ -158,27 +141,16 @@ gulp.task('styles', function () {
         // }))
         .on('error', console.error.bind(console))
         .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
-<<<<<<< HEAD
         // .pipe(gulp.dest('.tmp/scss'))
-=======
-        .pipe(gulp.dest('.tmp/scss'))
-        // Concatenate And Minify Styles
-        // .pipe($.if('*.css', $.csscomb()))
-        // .pipe($.if('*.css', $.csso()))
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
         .pipe(gulp.dest(config.path.css))
         .pipe($.size({ title: 'styles' }));
 });
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
-<<<<<<< HEAD
     var assets = $.useref.assets({ searchPath: '{.tmp,' + config.path.htdocs + '}' });
-=======
-    var assets = $.useref.assets({ searchPath: '{.tmp, ' + config.path.htdocs + '}' });
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
 
-    return gulp.src(config.path.htdocs + '*.html')
+    return gulp.src(config.path.htdocs + '**/*.html')
         .pipe($.plumber())
         .pipe(assets)
         // Concatenate And Minify JavaScript
@@ -186,17 +158,17 @@ gulp.task('html', function () {
         // Remove Any Unused CSS
         // Note: If not using the Style Guide, you can delete it from
         // the next line to only include styles your project uses.
-        .pipe($.if('*.css', $.uncss({
-            html: [
-                config.path.htdocs + 'index.html',
-                config.path.htdocs + 'styleguide.html'
-            ],
-            // CSS Selectors for UnCSS to ignore
-            // ignore: [
-            //     /.navdrawer-container.open/,
-            //     /.app-bar.open/
-            // ]
-        })))
+        // .pipe($.if('*.css', $.uncss({
+        //     html: [
+        //         config.path.htdocs + 'index.html',
+        //         // config.path.htdocs + 'styleguide.html'
+        //     ],
+        //     // CSS Selectors for UnCSS to ignore
+        //     // ignore: [
+        //     //     /.navdrawer-container.open/,
+        //     //     /.app-bar.open/
+        //     // ]
+        // })))
         // Concatenate And Minify Styles
         // In case you are still using useref build blocks
         .pipe($.if('*.css', $.csscomb()))
@@ -238,11 +210,7 @@ gulp.task('minify:styles', function () {
 });
 
 gulp.task('minify:scripts', function () {
-<<<<<<< HEAD
     return gulp.src(config.path.js + '**/*.js')
-=======
-    return gulp.src(config.path.js + '*.js')
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
         .pipe($.plumber())
         // Concatenate And Minify JavaScript
         .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
@@ -252,12 +220,8 @@ gulp.task('minify:scripts', function () {
 });
 
 // Clean Output Directory
-<<<<<<< HEAD
 gulp.task('clean', del.bind(null, [ '.tmp', config.path.dist + '*' ], { dot: true }));
 // gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
-=======
-gulp.task('clean', del.bind(null, [ '.tmp', config.path.dist ]));
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
 
 gulp.task('coffee', function() {
     return gulp.src([config.path.coffee + '*.coffee'])
@@ -343,7 +307,7 @@ gulp.task('serve', ['styles'], function () {
 });
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function () {
+gulp.task('serve:dist', ['deploy'], function () {
     browserSync({
         notify: false,
         logPrefix: 'WSK',
@@ -361,26 +325,15 @@ gulp.task('default', ['clean'], function (cb) {
 });
 
 gulp.task('deploy', ['clean'], function(cb) {
-<<<<<<< HEAD
-    // runSequence(
-    //   ['styles', 'coffee', 'typescript'],
-    //   ['jshint', 'images', 'html', 'fonts', 'copy'],
-    //   cb
-    // );
-=======
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
     runSequence(
       ['styles', 'coffee', 'typescript'],
       ['jshint', 'images', 'html', 'fonts', 'copy'],
       cb
     );
-<<<<<<< HEAD
 });
 
 gulp.task('setup', [], function (cb) {
     // runSequence('styles', ['jshint', 'images', 'fonts', 'copy'], cb);
-=======
->>>>>>> c8f67e5fd2e6fef810fe7baeecc7527c2ccad6a4
 });
 
 // Run PageSpeed Insights
