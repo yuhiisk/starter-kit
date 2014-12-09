@@ -2,8 +2,7 @@
  * my gulpfile
  *
  * TODO:
- * * minify(html, useref)
- * * deploy task (ignore sourcemap)
+ * * deploy task (concat)
  * * sprites
  * * error handling
  * * delete sourcemap option
@@ -52,6 +51,12 @@ var gulp = require('gulp'),
             'fonts': root + 'fonts/',
 
             'docs': root + 'docs/'
+        }
+    },
+    file = {
+        'name': {
+            'css': 'style.css',
+            'js': 'main.min.js'
         }
     };
 
@@ -175,8 +180,6 @@ gulp.task('html', function () {
         .pipe($.if('*.css', $.csso()))
         .pipe(assets.restore())
         .pipe($.useref())
-        // Update Production Style Guide Paths
-        // .pipe($.replace('components/components.css', 'components/main.min.css'))
         // Minify Any HTML
         // .pipe($.if('*.html', $.minifyHtml()))
         // Output Files
@@ -205,6 +208,7 @@ gulp.task('minify:styles', function () {
         // Concatenate And Minify Styles
         .pipe($.if('*.css', $.csscomb()))
         .pipe($.if('*.css', $.csso()))
+        // .pipe($.concat(file.name.css))
         .pipe(gulp.dest(config.path.dist + 'css'))
         .pipe($.size({ title: 'minify:styles' }));
 });
@@ -277,7 +281,7 @@ gulp.task('bower', function() {
     return gulp.src(bowerFiles())
         .pipe(jsFilter)
         .pipe($.uglify({ preserveComments: 'some' }))
-        .pipe($.concat('lib.min.js'))
+        .pipe($.concat(file.name.js))
         .pipe(gulp.dest(config.path.js))
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
@@ -332,7 +336,7 @@ gulp.task('deploy', ['clean'], function(cb) {
     );
 });
 
-gulp.task('setup', [], function (cb) {
+gulp.task('setup', ['bower'], function (cb) {
     // runSequence('styles', ['jshint', 'images', 'fonts', 'copy'], cb);
 });
 
