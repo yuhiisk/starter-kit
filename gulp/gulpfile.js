@@ -37,11 +37,11 @@ var gulp = require('gulp'),
         'bb >= 10'
     ],
 
-    root = 'test/src/',
+    root = 'src/',
     config = {
         'path' : {
             'htdocs': root,
-            'dist': 'test/dist/',
+            'dist': 'dist/',
             'css': root + 'css/',
             'scss': root + 'scss/',
             'js': root + 'js/',
@@ -94,9 +94,9 @@ gulp.task('copy', function () {
         '!' + config.path.coffee + '**',
         '!' + config.path.ts,
         '!' + config.path.ts + '**',
-        // '!test/src/{scss,scss/**}',
-        // '!test/src/{coffee,coffee/**}',
-        // '!test/src/{ts,ts/**}',
+        // '!src/{scss,scss/**}',
+        // '!src/{coffee,coffee/**}',
+        // '!src/{ts,ts/**}',
     ], {
         dot: true
     }).pipe(gulp.dest(config.path.dist))
@@ -295,7 +295,7 @@ gulp.task('serve', ['styles'], function () {
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
-        server: [ 'test/.tmp', config.path.htdocs ]
+        server: [ '.tmp', config.path.htdocs, 'test' ]
     });
 
     gulp.watch([config.path.htdocs + '**/*.html'], reload);
