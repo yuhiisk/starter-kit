@@ -69,3 +69,36 @@ QUnit.test( "a test", function( assert ) {
 
     $body.trigger( "click" );
 });
+
+// async(): 非同期処理
+QUnit.test( "asynchronous test: async input focus", function( assert ) {
+    var done = assert.async();
+    var input = $( "#test-input" ).focus();
+    setTimeout(function() {
+        assert.equal( document.activeElement, input[0], "Input was focused" );
+        done();
+    }, 0);
+});
+
+
+// user action
+function KeyLogger( target ) {
+    this.target = target;
+    this.log = [];
+
+    var that = this;
+    this.target.off( "keydown" ).on( "keydown", function( event ) {
+        that.log.push( event.keyCode );
+    });
+}
+
+QUnit.test( "keylogger api behavior", function( assert ) {
+    var $doc = $( document ),
+        keys = new KeyLogger( $doc );
+
+    // Trigger the key event
+    $doc.trigger( $.Event( "keydown", { keyCode: 9 } ) );
+    // Verify expected behavior
+    assert.deepEqual( keys.log, [ 9 ], "correct key was logged");
+});
+
