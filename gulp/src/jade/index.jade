@@ -1,0 +1,12 @@
+extends layout/_application
+
+block meta
+	- var PageTitle = ""
+	- var Path = ""
+	- var Description = "ダミーテキスト"
+
+block main
+	ul
+		each val in [1,2,3,4,5]
+			li= val
+
