@@ -15,6 +15,8 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     $ = require('gulp-load-plugins')(),
     del = require('del'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
     bowerFiles = require('main-bower-files'),
     runSequence = require('run-sequence'),
 
@@ -25,7 +27,7 @@ var gulp = require('gulp'),
     PAGESPEED_TARGET_URL = 'http://example.com/',
 
     AUTOPREFIXER_BROWSERS = [
-        'ie >= 10',
+        'ie >= 8',
         'ie_mob >= 10',
         'ff >= 30',
         'chrome >= 34',
@@ -36,7 +38,7 @@ var gulp = require('gulp'),
         'bb >= 10'
     ],
 
-    root = 'src/',
+    root = '',
     config = {
         'path' : {
             'htdocs': root,
@@ -46,8 +48,9 @@ var gulp = require('gulp'),
             'js': root + 'js/',
             'coffee': root + 'coffee/',
             'ts': root + 'ts/',
+            'jade': root + 'jade/',
             'image': root + 'img/',
-            'sprite': root + 'sprite/',
+            'sprite': root + 'img/sprite/',
             'fonts': root + 'fonts/',
 
             'docs': root + 'docs/'
@@ -56,16 +59,50 @@ var gulp = require('gulp'),
     file = {
         'name': {
             'css': 'style.css',
-            'js': 'main.min.js'
-        }
+            'js': 'lib.min.js'
+        },
+        'lib': [
+            'js/lib/underscore-min.js',
+            'js/lib/jquery.mockjax.js',
+            'js/lib/backbone.js',
+            'js/lib/boombox.min.js',
+            'js/lib/easeljs-0.8.0.js',
+            'js/lib/tweenjs-0.6.0.js',
+            'js/lib/preloadjs-0.6.0.js'
+        ],
+        'classes': [
+            'js/EventDispatcher.js',
+            'js/namespace.js',
+            'js/util.js',
+            'js/config.js',
+            'js/bitmap.js',
+            'js/item.js',
+            'js/people.js',
+            'js/scene.js',
+            'js/model.js',
+            'js/view.js',
+
+            'js/scene_opening.js',
+            'js/scene1.js',
+            'js/scene2.js',
+            'js/scene3.js',
+            'js/scene4.js',
+            'js/scene5.js',
+            'js/scene6.js',
+            'js/scene_ending.js'
+            // , 'js/app.js'
+        ]
     };
 
 
 // Lint Javascript
 gulp.task('jshint', function () {
-    return gulp.src(config.path.js + '**/*.js')
+    return gulp.src([
+            config.path.js + '**/*.js',
+            '!' + config.path.js + 'lib/*.js',
+        ])
         .pipe($.plumber())
-        .pipe(reload({ stream: true, once: true }))
+        // .pipe(reload({ stream: true, once: true }))
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'));
         // browserSyncが立ち上がっていないとerror logを吐く
@@ -213,19 +250,57 @@ gulp.task('minify:styles', function () {
         .pipe($.size({ title: 'minify:styles' }));
 });
 
-gulp.task('minify:scripts', function () {
-    return gulp.src(config.path.js + '**/*.js')
+gulp.task('minify:lib', function () {
+    return gulp.src(file.lib)
         .pipe($.plumber())
+        .pipe($.concat('lib.min.js'))
         // Concatenate And Minify JavaScript
         .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
         // Output Files
-        .pipe(gulp.dest(config.path.dist + 'js'))
-        .pipe($.size({ title: 'minify:js' }));
+        .pipe(gulp.dest(config.path.js))
+        .pipe($.size({ title: 'minify:lib' }));
+});
+gulp.task('minify:classes', function () {
+    return gulp.src(file.classes)
+        .pipe($.plumber())
+        .pipe($.concat('kazoku.min.js'))
+        // Concatenate And Minify JavaScript
+        .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
+        // Output Files
+        .pipe(gulp.dest(config.path.js))
+        .pipe($.size({ title: 'minify:classes' }));
+});
+
+gulp.task('minify:all', function () {
+    return gulp.src(
+        file.lib,
+        file.classes,
+        [ 'js/app.js' ]
+    )
+        .pipe($.plumber())
+        .pipe($.concat('all.min.js'))
+        // Concatenate And Minify JavaScript
+        .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
+        // Output Files
+        .pipe(gulp.dest(config.path.js))
+        .pipe($.size({ title: 'minify:all' }));
 });
 
 // Clean Output Directory
 gulp.task('clean', del.bind(null, [ '.tmp', config.path.dist + '*' ], { dot: true }));
 // gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
+
+gulp.task('jade', function() {
+    return gulp.src([
+        config.path.jade + '**/*.jade'//, '!' + config.path.jade + '**/_*.jade'
+    ])
+        .pipe($.plumber())
+        .pipe($.jade({
+            pretty: true
+        }))
+        .pipe(gulp.dest(config.path.htdocs))
+        .pipe($.size({ title: 'jade' }));
+});
 
 gulp.task('coffee', function() {
     return gulp.src([config.path.coffee + '*.coffee'])
@@ -246,33 +321,43 @@ gulp.task('typescript', function() {
         .pipe($.size({ title: 'typescript' }))
 });
 
-gulp.task('sprite', function() {
-    var spriteData = gulp.src(config.path.sprite + '*.png')
-        .pipe($.plumber())
-        .pipe($.spritesmith({
-            imgName: 'sprite.png',
-            cssName: 'sprite.scss',
-            padding: 5
-        }));
-    spriteData.img.pipe(gulp.dest(config.path.dist + 'img'));
-    spriteData.css.pipe(gulp.dest(config.path.dist + 'scss'));
-
+gulp.task('js:build', function() {
+    return browserify({
+        entries: ['./' + config.path.coffee + 'app.coffee'],
+        extensions: ['.coffee']
+    })
+    // .transform('coffeeify')
+    .bundle()
+    .pipe(source('app.concat.js'))
+    .pipe(gulp.dest(config.path.js))
 });
 
-// gulp.task('watch', function() {
-//     gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
-//         var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
-//         var spriteData = gulp.src(filePath[1] + filePath[2] + '/*.png')
-//             .pipe($.plumber())
-//             .pipe(plumber)
-//             .pipe($.spritesmith({
-//                 imgName: filePath[2] + '.png',
-//                 cssName: filePath[2] + '.scss'
-//             }));
-//         spriteData.img.pipe(gulp.dest(config.path.image));
-//         spriteData.css.pipe(gulp.dest(config.path.sass));
-//     })
+// gulp.task('sprite', function() {
+    // var spriteData = gulp.src(config.path.sprite + '*.png')
+        // .pipe($.plumber())
+        // .pipe($.spritesmith({
+            // imgName: 'sprite.png',
+            // cssName: 'sprite.scss',
+            // padding: 5
+        // }));
+    // spriteData.img.pipe(gulp.dest(config.path.dist + 'img'));
+    // spriteData.css.pipe(gulp.dest(config.path.dist + 'scss'));
+
 // });
+
+gulp.task('watch', function() {
+    gulp.watch(config.path.sprite + '/**/*.png', function(arg) {
+        var filePath = arg.path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/);
+        var spriteData = gulp.src(filePath[1] + filePath[2] + '/*.png')
+            .pipe($.plumber())
+            .pipe($.spritesmith({
+                imgName: filePath[2] + '.png',
+                cssName: filePath[2] + '.scss'
+            }));
+        spriteData.img.pipe(gulp.dest(config.path.image));
+        spriteData.css.pipe(gulp.dest(config.path.scss));
+    })
+});
 
 gulp.task('bower', function() {
     var jsFilter = $.filter('**/*.js'),
@@ -299,15 +384,17 @@ gulp.task('serve', ['styles'], function () {
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
+        host: '172.21.33.241',
         server: [ '.tmp', config.path.htdocs, 'test' ]
     });
 
     gulp.watch([config.path.htdocs + '**/*.html'], reload);
     gulp.watch([config.path.scss + '**/*.{scss, css}'], ['styles', reload]);
+    gulp.watch([config.path.jade + '**/*.jade'], ['jade']);
     gulp.watch([config.path.ts + '**/*.ts'], ['typescript']);
     gulp.watch([config.path.coffee + '**/*.coffee'], ['coffee']);
-    gulp.watch([config.path.js + '*.js'], ['jshint']);
-    gulp.watch([config.path.image + '**/*'], reload);
+    // gulp.watch([config.path.js + '*.js'], ['jshint']);
+    // gulp.watch([config.path.image + '**/*'], reload);
 });
 
 // Build and serve the output from the dist build
@@ -324,8 +411,15 @@ gulp.task('serve:dist', ['deploy'], function () {
 });
 
 // Build Production Files, the Default Task
-gulp.task('default', ['clean'], function (cb) {
-    runSequence('styles', ['jshint', 'images', 'fonts', 'copy'], cb);
+gulp.task('default', function (cb) {
+    runSequence(
+        'styles',
+        'jade',
+        'js:build',
+        ['jshint'],
+        'serve',
+        cb
+    );
 });
 
 gulp.task('deploy', ['clean'], function(cb) {
