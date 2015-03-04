@@ -1,12 +1,14 @@
 extends layout/_application
 
 block meta
-	- var PageTitle = ""
-	- var Path = ""
-	- var Description = "ダミーテキスト"
+    - var pageTitle = ""
+    - var path = ""
+    - var description = ""
+
+block style
 
 block main
-	ul
-		each val in [1,2,3,4,5]
-			li= val
 
+block scripts
+
+    script(src="/js/index.js")

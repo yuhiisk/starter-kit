@@ -1,38 +1,43 @@
 //- include /mixin/_conditionalComment
 doctype html
 html(lang="ja")
-	head
-		block meta
-			- var PageTitle = "site title"
-			- var Path = ""
-			- var Description = "description"
+    head
+        block meta
+            - var pageTitle = ""
+            - var path = ""
+            - var description = ""
 
-		include ../include/_meta
+        include /include/_meta
 
-		block style
-		block script
-		//- +ltIE9
-		//- script(src="js/lib/html5shiv.js")
-	body
+        // Page styles
+        link(rel="stylesheet", href="css/style.css")
+        block style
 
-		include ../include/_header
+        //[if lt IE 9]>
+        script(src="js/lib/html5shiv.js")
+        //<![endif]
 
-		div.fixed-footer.
-			footer
+        block script
+    body
 
-		main.container
-			block main
+        include /include/_header
 
-		include ../include/_footer
+        main.container
+            block main
 
-		block scripts
-		//- include /include/script/_analytics
-		//- include /include/script/_twitter
-		//- include /include/script/_facebook
-		//- each val in libs
-			//- script(src=val type="text/javascript" charset="UTF-8")
-		//- if prod
-			//- script(src="js/app.min.js" type="text/javascript" charset="UTF-8")
-		//- else
-			//- each val in sc
-				//- script(src=val type="text/javascript" charset="UTF-8")
+        include /include/_footer
+
+        include /include/script/_analytics
+        include /include/script/_twitter
+        include /include/script/_facebook
+
+        //- script(src="js/lib.min.js")
+        block scripts
+
+        //- each val in libs
+            //- script(src=val type="text/javascript" charset="UTF-8")
+        //- if prod
+            //- script(src="js/app.min.js" type="text/javascript" charset="UTF-8")
+        //- else
+            //- each val in sc
+                //- script(src=val type="text/javascript" charset="UTF-8")
