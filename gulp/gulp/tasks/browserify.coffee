@@ -5,10 +5,10 @@ source = require 'vinyl-source-stream'
 
 gulp.task 'browserify', () ->
     return browserify({
-        entries: [config.path.coffee + 'app.coffee'],
+        entries: [config.path.coffee + config.entry.coffee],
         extensions: ['.coffee']
     })
     # .transform('coffeeify')
     .bundle()
-    .pipe(source('app.concat.js'))
+    .pipe(source(config.name.js))
     .pipe(gulp.dest(config.path.js))

@@ -13,7 +13,8 @@ gulp.task 'styles', () ->
         .pipe($.changed('styles', { extension: '.scss' }))
         .pipe(sass({
             style: 'expanded',
-            precision: 10
+            precision: 10,
+            sourcemap: false
         }))
         # Use compass
         # .pipe($.compass({

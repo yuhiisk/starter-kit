@@ -1,0 +1,72 @@
+// CSS Sprite
+// ===================================================================
+@mixin sprite-icon() {
+	display: block;
+	background-repeat: no-repeat;
+	@include hide-text();
+	line-height: 1;
+}
+
+@mixin sprite-icon-inline() {
+	display: inline-block;
+	background-repeat: no-repeat;
+	@include hide-text();
+	line-height: 1;
+}
+
+// use compass
+// @mixin sprites($map, $map-item, $isCommon: false) {
+// 	@if $isCommon {
+// 		display: block;
+// 		text-indent: -9999px;
+// 		line-height: 1;
+// 		background-image: sprite-url($map);
+// 		background-repeat: no-repeat;
+// 	} @else {
+// 		$pos-y: sprite-position($map, $map-item);
+// 		width: image-width(sprite-file($map, $map-item));
+// 		height: image-height(sprite-file($map, $map-item));
+// 		background-position: $pos-y;
+// 	}
+// }
+//
+// @mixin sprites-2x($map, $map-item, $isCommon: false) {
+// 	@if $isCommon {
+// 		display: block;
+// 		text-indent: -9999px;
+// 		line-height: 1;
+// 		background-image: sprite-url($map);
+// 		background-repeat: no-repeat;
+// 		background-size: round(image-width(sprite-path($map)) / 2) round(image-height(sprite-path($map)) / 2);
+// 	} @else {
+// 		$pos-y: round(nth(sprite-position($map, $map-item), 2) / 2);
+// 		width: round(image-width(sprite-file($map, $map-item)) / 2);
+// 		height: round(image-height(sprite-file($map, $map-item)) / 2);
+// 		background-position: 0 $pos-y;
+// 	}
+// }
+
+
+
+@mixin sprite-item($url, $width, $height) {
+	display: block;
+	width: $width;
+	height: $height;
+	background-image: url($url);
+	background-repeat: no-repeat;
+	text-indent: -9999px;
+	line-height: 1;
+}
+
+@mixin list-sprite-item($width, $height, $bgLeft, $bgTop: 0) {
+	width: $width;
+	height: $height;
+	background-position: $bgLeft 0;
+
+	@if $bgTop != 0 {
+		&.current,
+		&:hover {
+			background-position: $bgLeft $bgTop;
+		}
+	}
+}

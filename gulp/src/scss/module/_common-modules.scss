@@ -1,0 +1,333 @@
+// ==========================================================================
+// common-modules
+// ==========================================================================
+// structure
+.container {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+// 吹き出し
+.mod-balloon {
+    position: relative;
+    padding: 18px;
+    border: 6px solid #000;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 6px 0 #000;
+
+    .mod-balloon__icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+.mod-balloon--arrow {
+    @extend .mod-balloon;
+
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -31px;
+        left: 302px;
+        width: 24px;
+        height: 31px;
+        background: url(../img/icon/arrow_m_l.png) no-repeat;
+    }
+}
+
+
+.offset-wrap {
+    position: relative;
+}
+
+.mod-balloon__offset {
+    position: absolute;
+    top: -42px;
+    left: -6px;
+    @include clearfix;
+}
+.mod-balloon__offset-popup {
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 20px;
+    border: 4px solid #000;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+
+    &:hover {
+        color: #000;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 35px;
+        width: 8px;
+        height: 8px;
+        background: url(../img/icon/arrow_s_l.png) no-repeat;
+    }
+    span {
+        color: #6ab82c;
+    }
+}
+
+
+// テキストボックス(login/ etc...)
+.mod-textbox {
+    width: 510 - 26px;
+    padding: 0 13px;
+    border: 6px solid #000;
+    box-shadow: 0 6px 0 #b5b2b3;
+    font-size: 36px;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 0;
+
+    &::-webkit-input-placeholder {
+        color: #a3a3a3;
+        text-align: center;
+    }
+    &:-moz-placeholder {
+        color: #a3a3a3;
+        text-align: center;
+    }
+    &::-moz-placeholder {
+        color: #a3a3a3;
+        text-align: center;
+    }
+    &:-ms-input-placeholder {
+        color: #a3a3a3;
+        text-align: center;
+    }
+}
+
+
+
+// 議題ページ
+.agenda-title {
+    margin-bottom: 26px;
+    padding-top: 60px;
+    background-color: #6ab82c;
+
+    .mod-balloon__icon {
+        @include sprite($document);
+        @include sprite-icon();
+    }
+}
+
+.agenda-title--disabled {
+    background-color: #919191;
+}
+
+.agenda-title__link {
+    display: block;
+    color: #000;
+
+    &:hover {
+        color: #000;
+    }
+}
+.agenda__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include clearfix;
+    width: 100%;
+}
+.agenda__name {
+    float: left;
+    @include sprite-icon;
+}
+.agenda__name--brainstorming {
+    @include sprite($ttl_brainstorming);
+}
+.agenda__name--enquete {
+    @include sprite($ttl_enquete);
+}
+.agenda__limit {
+    float: right;
+    padding: 0 16px 0 0;
+}
+%limit-text {
+    @include sprite-icon;
+    display: inline-block;
+    vertical-align: top;
+}
+.agenda__limit-text1 {
+    @extend %limit-text;
+    @include sprite($txt_countdown_1);
+}
+.agenda__limit-text2 {
+    @extend %limit-text;
+    @include sprite($txt_countdown_2);
+}
+.agenda__limit-text3 {
+    @extend %limit-text;
+    @include sprite($txt_countdown_3);
+}
+.agenda__limit-text--publish {
+    @extend %limit-text;
+    @include sprite($txt_published);
+    margin-top: 6px;
+}
+.agenda__limit-text--wanted-end {
+    @extend %limit-text;
+    @include sprite($txt_wanted-end);
+    margin-top: 6px;
+}
+.agenda__limit-text--vote-end {
+    @extend %limit-text;
+    @include sprite($txt_vote-end);
+    margin-top: 6px;
+}
+.agenda__limit-text--today-end {
+    @extend %limit-text;
+    @include sprite($txt_today-end);
+    margin-top: -5px;
+}
+.agenda__main {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.25;
+}
+.agenda__main--center {
+    text-align: center;
+}
+.agenda__image {
+    margin: 15px 0;
+    text-align: center;
+}
+.agenda__feature {
+    margin-top: 13px;
+    padding: 28px;
+    border-radius: 6px;
+    background-color: #fff;
+}
+.agenda__feature-header {
+    @include clearfix;
+    margin-bottom: 15px;
+}
+.agenda__feature-title {
+    float: left;
+    width: 320px;
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 1.25;
+}
+.agenda__feature-period {
+    width: 215px;
+    font-size: 16px;
+    font-family: $Lato;
+    font-weight: bold;
+    text-align: right;
+    margin: 1em 0 0 -14px;
+    .icon-schedule {
+        margin-right: 8px;
+    }
+}
+.agenda__feature-text {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.6;
+}
+.agenda__feature-link a {
+    color: #53b800;
+    font-size: 18px;
+    text-decoration: underline;
+}
+.agenda__footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 244px;
+    margin-top: 70px;
+    text-align: center;
+    transition: bottom .3s, padding-bottom .3s;
+}
+
+@include mq-sp(784px) {
+    .agenda__footer {
+        bottom: 0;
+    }
+}
+
+.agenda__footer--at-scroll-bottom {
+    padding-bottom: 38px;
+}
+
+// モーダル
+.agenda-confirm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.agenda-confirm__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2NkYGCwBwAASQBBi0+u6AAAAABJRU5ErkJggg==);
+}
+.agenda-confirm__content {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 640px;
+    margin-left: -320px;
+    padding-bottom: 38px;
+    //background: url(../img/brainstorming/img_confirm.png) no-repeat 504px 100%;
+}
+
+.agenda-confirm__content--post {
+    //background: url(../img/brainstorming/img_post.png) no-repeat 476px 100%;
+}
+.timeline-unit--confirm {
+    padding-bottom: 20px;
+
+    &.is-active {
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -44px;
+            left: 438px;
+            width: 54px;
+            height: 64px;
+            background: url(../img/icon/arrow_circle_l.png) no-repeat;
+        }
+    }
+}
+.agenda-confirm__submit {
+    padding: 6px 0 13px;
+    text-align: center;
+}
+
+.agenda-confirm__check {
+    font-weight: bold;
+    text-align: center;
+    label {
+        cursor: pointer;
+        @include disabled-select;
+    }
+}
+
+.agenda-confirm__check-label {
+    font-size: 28px;
+}
+.agenda-confirm__check-attension {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 0 12px;
+    background-color: #6ab82c;
+    font-size: 20px;
+}

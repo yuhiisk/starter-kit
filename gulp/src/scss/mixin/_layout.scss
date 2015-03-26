@@ -1,0 +1,48 @@
+// Layout
+// ===================================================================
+//
+// コンテナレイヤー
+// @param $innerWidth 内径 幅
+// @param $innerHeight 内径 高さ
+//
+@mixin content-layer($innerWidth, $innerHeight) {
+	overflow: hidden;
+	width: 100%;
+	min-width: $innerWidth;
+	height: $innerHeight;
+
+	.inner {
+		position: relative;
+		overflow: hidden;
+		min-width: $innerWidth;
+		height: $innerHeight;
+	}
+}
+
+//
+// 絶対位置に配置
+// @param $top
+// @param $right
+// @param $bottom
+// @param $left
+//
+@mixin position($top, $right, $bottom, $left) {
+	position: absolute;
+
+	@if $top    != '' { top: $top; }
+	@if $bottom != '' { bottom: $bottom; }
+	@if $left   != '' { left: $left; }
+	@if $right  != '' { right: $right; }
+}
+
+// centering
+@mixin position-center($width, $height) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	// @if $width  != '' { width: $width; }
+	// @if $height != '' { height: $height; }
+	@if $width  != '' { width: $width; margin-left: -$width / 2; }
+	@if $height != '' { height: $height; margin-top: -$height / 2; }
+}

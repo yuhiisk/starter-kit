@@ -1,4 +1,7 @@
 root = './'
+dev = './src/'
+dist = './dist/'
+
 AUTOPREFIXER_BROWSERS = [
     'ie >= 8',
     'ie_mob >= 10',
@@ -13,54 +16,28 @@ AUTOPREFIXER_BROWSERS = [
 
 module.exports =
     path:
-        'htdocs': root,
-        'dist': './dist/',
-        'css': root + 'css/',
-        'scss': root + 'scss/',
-        'js': root + 'js/',
-        'coffee': root + 'coffee/',
-        'ts': root + 'ts/',
-        'jade': root + 'jade/',
-        'image': root + 'img/',
-        'sprite': root + 'img/sprite/',
-        'fonts': root + 'fonts/',
+        'htdocs': dev,
+        'dist': dist,
+        'css': dev + 'css/',
+        'scss': dev + 'scss/'
+        'js': dev + 'js/',
+        'coffee': dev + 'coffee/',
+        'image': dev + 'img/',
+        'sprite': dev + 'img/sprite/',
+        'fonts': dev + 'fonts/',
 
-        'docs': root + 'docs/'
+        'docs': dev + 'docs/'
+
     autoprefixer: AUTOPREFIXER_BROWSERS
 
-    file:
-        name:
-            'css': 'style.css',
-            'js': 'lib.min.js'
-        lib: [
-            'js/lib/underscore-min.js',
-            'js/lib/jquery.mockjax.js',
-            'js/lib/backbone.js',
-            'js/lib/boombox.min.js',
-            'js/lib/easeljs-0.8.0.js',
-            'js/lib/tweenjs-0.6.0.js',
-            'js/lib/preloadjs-0.6.0.js'
-        ]
-        classes: [
-            'js/EventDispatcher.js',
-            'js/namespace.js',
-            'js/util.js',
-            'js/config.js',
-            'js/bitmap.js',
-            'js/item.js',
-            'js/people.js',
-            'js/scene.js',
-            'js/model.js',
-            'js/view.js',
+    # entry point
+    entry:
+        'css': 'style.css',
+        'js': 'script.js'
+        'coffee': 'script.coffee'
 
-            'js/scene_opening.js',
-            'js/scene1.js',
-            'js/scene2.js',
-            'js/scene3.js',
-            'js/scene4.js',
-            'js/scene5.js',
-            'js/scene6.js',
-            'js/scene_ending.js'
-            # , 'js/app.js'
-        ]
+    # after compile name
+    name:
+        'css': 'style.css'
+        'js': 'script.js'
 

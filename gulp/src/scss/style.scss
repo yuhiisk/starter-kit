@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+// ==========================================================================
+//   index
+// ==========================================================================
+
+// Core files
+// ==========================================================================
+// configuration file
+@import "config/config-compass";
+@import "config/config";
+// original mixins and functions
+@import "mixin/all";
+@import "function/func";
+
+
+.page-index {
+
+}

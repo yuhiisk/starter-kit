@@ -1,0 +1,9 @@
+
+// Color
+// ==========================================================================
+@mixin color-pattern($color, $bg: false) {
+	color: $color;
+	@if $bg == true {
+		background-color: $color;
+	}
+}

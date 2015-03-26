@@ -1,0 +1,33 @@
+// ==========================================================================
+// media-queries
+// ==========================================================================
+
+@mixin mq-pc ($breakpoint: $breakpoint) {
+	@media not all and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+@mixin mq-sp ($breakpoint: $breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+@mixin mq-orientation ($breakpoint: 480px) {
+	@media only screen and (min-width: $breakpoint) {
+		@content;
+	}
+}
+
+@mixin mq ($min: "", $max: "") {
+	@if $max == "" {
+		@media only screen and ($min) {
+			@content;
+		}
+	} @else {
+		@media only screen and ($min) and ($max) {
+			@content;
+		}
+	}
+}

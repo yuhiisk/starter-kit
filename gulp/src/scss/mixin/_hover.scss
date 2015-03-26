@@ -1,0 +1,13 @@
+//
+// hover
+// ------------------------------
+@mixin hover() {
+	&:hover {
+		@include opacity(.7);
+	}
+	// @include mq-sp {
+	// 	&:hover {
+	// 		opacity: 1;
+	// 	}
+	// }
+}

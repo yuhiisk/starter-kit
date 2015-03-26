@@ -1,0 +1,50 @@
+// ==========================================================================
+// Footer
+// ==========================================================================
+.global-footer {
+    position: relative;
+    z-index: 1000;
+    padding: 2px 0 3px;
+    border-top: 3px solid #000;
+    background-color: #fff;
+
+    .container {
+        @include clearfix;
+    }
+}
+
+.global-footer__logo {
+    float: left;
+    margin-top: 7px;
+
+    a {
+        @include sprite($logo_kayac);
+        @include sprite-icon;
+    }
+}
+
+.global-footer__nav {
+    width: 436px;
+    float: right;
+
+    ul {
+        @include clearfix;
+    }
+    li {
+        float: left;
+        margin-left: 12px;
+        font-size: 20px;
+        &:first-child {
+            margin-left: 5px;
+        }
+    }
+    a {
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

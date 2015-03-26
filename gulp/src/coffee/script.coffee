@@ -1,9 +1,12 @@
+Klass = require './klass'
+EventDispatcher = require './EventDispatcher'
+
 ((win, doc) ->
 
     'use strict'
 
-    console.log "hello world!"
+    obj = new Klass('world')
+    console.log obj.say()
+    console.log new EventDispatcher()
 
-    $ ->
-
-) @, @document
+) window, window.document

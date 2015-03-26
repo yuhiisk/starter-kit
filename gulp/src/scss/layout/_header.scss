@@ -1,0 +1,73 @@
+// ==========================================================================
+// Header
+// ==========================================================================
+.global-header {
+    position: relative;
+    z-index: 1000;
+    padding: 7px 0 0;
+    border-bottom: 3px solid #000;
+    background-color: #fff;
+
+    .container {
+        @include clearfix;
+    }
+}
+
+.global-header__logo {
+    float: left;
+
+    a {
+        @include sprite($logo_kbns);
+        @include sprite-icon;
+    }
+}
+
+.global-header__nav {
+    float: right;
+    width: 394px;
+    padding: 10px 2px 0 0;
+
+    ul {
+        @include clearfix;
+    }
+
+    li {
+        float: left;
+        margin-left: 8px;
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    a {
+        @include sprite-icon;
+    }
+    .agenda {
+        @include sprite($nav_agenda);
+        &:hover,
+        .is-active {
+            @include sprite($nav_agenda_o);
+        }
+    }
+    .rule {
+        @include sprite($nav_rule);
+        &:hover,
+        .is-active {
+            @include sprite($nav_rule_o);
+        }
+    }
+    .profile {
+        @include sprite($nav_profile);
+        &:hover,
+        .is-active {
+            @include sprite($nav_profile_o);
+        }
+    }
+    .login {
+        @include sprite($nav_login);
+        &:hover,
+        .is-active {
+            @include sprite($nav_login_o);
+        }
+    }
+}
