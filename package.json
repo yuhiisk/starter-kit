@@ -1,6 +1,6 @@
 {
-  "name": "gulp-template",
-  "version": "0.0.1",
+  "name": "starter-kit",
+  "version": "1.0.0",
   "description": "original starter kit",
   "main": "gulpfile.coffee",
   "scripts": {
