@@ -15,6 +15,13 @@ $ bower i
 $ gulp
 ```
 
+## Tasks
+```
+$ gulp # デフォルトタスク
+$ gulp deploy # デプロイ（src/ を dist/ にコピー）
+$ gulp minify (※工事中)
+```
+
 ## Compassを使う
 
 gulp/tasks/styles.coffee
@@ -29,9 +36,15 @@ config.rbは別途用意すること。
 gulpfile.coffee
 `coffee` タスクを `browserify` に置き換えて使えます。
 
-# Tasks
+## CSSスプライトを使う
+
+src/img/sprite/ にフォルダを分けて配置する。
+フォルダごとに scss と スプライト画像が生成されます。
+
 ```
-$ gulp # デフォルトタスク
-$ gulp deploy # デプロイ（src/ を dist/ にコピー）
-$ gulp minify (※工事中)
+$ gulp sprite # 全てのスプライトを生成
+$ gulp sprite-[フォルダ名] # フォルダ単位でスプライトを生成
 ```
+
+生成されたscssはimportして使用する。
+詳しくは `src/scss/module/sprite-map.scss` を参照。
