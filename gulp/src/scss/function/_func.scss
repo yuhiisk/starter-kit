@@ -65,6 +65,7 @@ $fontSizeList: initFontSize($baseFontSize);
 
 //
 // Get easing value for animation (cubic-bezier)
+// cubic-bezier(returnEaseTypeToCubicBezier("ease"))
 // ==========================================================================
 @function returnEaseTypeToCubicBezier($type) {
     $easingValue: "";

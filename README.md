@@ -1,8 +1,7 @@
 utility
 =======
 
-自分用のテンプレートとかいろいろ入ってる
-
+自分用のテンプレートとか
 
 ## gulp
 
@@ -12,16 +11,11 @@ $ mkdir gulp
 $ cd gulp/
 $ npm install
 $ bower i
-$ gulp bower
-$ gulp serve
+$ gulp
 ```
 
-## Grunt
+## Compassを使う
 
-```
-$ npm install -g grunt-cli
-$ mkdir grunt
-$ cd grunt/
-$ npm install
-$ grunt
-```
+gulp/tasks/styles.coffee
+`sass()` をコメントアウトして代わりに `$.compass()` を有効にする。
+config.rbは別途用意すること。

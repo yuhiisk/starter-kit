@@ -9,8 +9,7 @@ EventDispatcher = require('./EventDispatcher');
   'use strict';
   var obj;
   obj = new Klass('world');
-  console.log(obj.say());
-  return console.log(new EventDispatcher());
+  return console.log(obj.say());
 })(window, window.document);
 
 

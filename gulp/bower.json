@@ -6,9 +6,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "html5-boilerplate": null,
     "jquery": "2.1.3",
-    "underscore": "~1.7.0",
     "createjs-preloadjs": "~0.6.0",
     "backbone": "~1.1.2"
   },

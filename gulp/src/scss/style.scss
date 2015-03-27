@@ -7,13 +7,42 @@
 // Core files
 // ==========================================================================
 // configuration file
-@import "config/config-compass";
-@import "config/config";
+@import
+    "config/config-compass",
+    "config/config";
 // original mixins and functions
-@import "mixin/all";
-@import "function/func";
+@import
+    "mixin/all",
+    "function/func";
+// normalize and original reset
+@import
+    "reset/normalize",
+    "reset/reset";
 
 
-.page-index {
+// Component files
+// ==========================================================================
+// csssprite
+// @import
+//     "spr-common",
+//     "spr-icon";
 
-}
+// modules
+@import
+    "module/sprite-map",
+    "module/common-modules",
+    "module/clearfix";
+
+// layouts
+@import
+    "layout/base",
+    "layout/header",
+    "layout/footer";
+
+// states
+@import "state/state";
+
+// Page files
+// ==========================================================================
+@import
+    "page/index";

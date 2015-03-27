@@ -7,6 +7,5 @@ EventDispatcher = require './EventDispatcher'
 
     obj = new Klass('world')
     console.log obj.say()
-    console.log new EventDispatcher()
 
 ) window, window.document

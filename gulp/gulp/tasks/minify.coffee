@@ -39,17 +39,6 @@ gulp.task 'minify:lib', () ->
         .pipe($.size({ title: 'minify:lib' }))
 
 
-gulp.task 'minify:class', () ->
-    return gulp.src(file.classes)
-        .pipe($.plumber())
-        .pipe($.concat('kazoku.min.js'))
-        # Concatenate And Minify JavaScript
-        .pipe($.if('*.js', $.uglify({ preserveComments: 'some' })))
-        # Output Files
-        .pipe(gulp.dest(config.path.js))
-        .pipe($.size({ title: 'minify:class' }))
-
-
 gulp.task 'minify:scripts', () ->
     return gulp.src(
         file.lib,
