@@ -1,8 +1,8 @@
 {
   "name": "gulp-template",
   "version": "0.0.1",
-  "description": "gulpfile",
-  "main": "gulpfile.js",
+  "description": "original starter kit",
+  "main": "gulpfile.coffee",
   "scripts": {
     "test": "."
   },
@@ -10,7 +10,7 @@
     "gulp"
   ],
   "author": "Youhei Isokawa",
-  "license": "ISC",
+  "license": "MIT",
   "browserify": {
     "transform": [
       "coffeeify",
