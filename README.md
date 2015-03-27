@@ -28,3 +28,10 @@ config.rbは別途用意すること。
 
 gulpfile.coffee
 `coffee` タスクを `browserify` に置き換えて使えます。
+
+# Tasks
+```
+$ gulp # デフォルトタスク
+$ gulp deploy # デプロイ（src/ を dist/ にコピー）
+$ gulp minify (※工事中)
+```
