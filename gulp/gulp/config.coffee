@@ -1,5 +1,6 @@
 root = './'
 dev = './src/'
+assets = dev + 'assets/'
 dist = './dist/'
 
 AUTOPREFIXER_BROWSERS = [
@@ -17,14 +18,15 @@ AUTOPREFIXER_BROWSERS = [
 module.exports =
     path:
         'htdocs': dev,
+        'assets': assets,
         'dist': dist,
-        'css': dev + 'css/',
+        'css': assets + 'css/',
         'scss': dev + 'scss/'
-        'js': dev + 'js/',
+        'js': assets + 'js/',
         'coffee': dev + 'coffee/',
-        'image': dev + 'img/',
-        'sprite': dev + 'img/sprite/',
-        'fonts': dev + 'fonts/',
+        'image': assets + 'img/',
+        'sprite': assets + 'img/sprite/',
+        'fonts': assets + 'fonts/',
 
         'docs': dev + 'docs/'
 

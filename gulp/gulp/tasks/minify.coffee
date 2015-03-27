@@ -24,12 +24,14 @@ gulp.task 'minify:styles', () ->
         .pipe($.if('*.css', $.csscomb()))
         .pipe($.if('*.css', $.csso()))
         # .pipe($.concat(file.name.css))
-        .pipe(gulp.dest(config.path.dist + 'css'))
+        .pipe(gulp.dest(config.path.dist + 'assets/css'))
         .pipe($.size({ title: 'minify:styles' }))
 
 
 gulp.task 'minify:lib', () ->
-    return gulp.src(file.lib)
+    return gulp.src([
+        config.path.js + 'lib/*.js'
+    ])
         .pipe($.plumber())
         .pipe($.concat('lib.min.js'))
         # Concatenate And Minify JavaScript
@@ -40,11 +42,10 @@ gulp.task 'minify:lib', () ->
 
 
 gulp.task 'minify:scripts', () ->
-    return gulp.src(
-        file.lib,
-        file.classes,
-        [ 'js/app.js' ]
-    )
+    return gulp.src([
+        config.path.js + 'lib/*.js'
+        config.path.js + '*.js'
+    ])
         .pipe($.plumber())
         .pipe($.concat('all.min.js'))
         # Concatenate And Minify JavaScript

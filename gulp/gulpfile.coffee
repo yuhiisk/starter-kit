@@ -1,9 +1,3 @@
-###
- #  TODO:
- #  * deploy task (clean)
- #  * document
-###
-
 'use strict'
 
 config = require './gulp/config'
@@ -47,3 +41,20 @@ gulp.task 'default', (cb) ->
         cb
     )
 
+gulp.task 'deploy', (cb) ->
+    runSequence(
+        'styles',
+        'browserify',
+        'clean',
+        'copy',
+        'jshint'
+        cb
+    )
+
+# gulp.task 'minify', (cb) ->
+#     runSequence(
+#         'minify:html',
+#         'minify:styles',
+#         'minify:scripts',
+#         cb
+#     )
