@@ -1,14 +1,15 @@
 utility
 =======
 
-自分用のテンプレートとか
+フロントエンドスターターキット。
+node.jsを事前にインストールすること。
 
-## gulp
+## gulpをインストール
 
 ```
 $ npm install -g gulp
-$ mkdir gulp
-$ cd gulp/
+$ mkdir project_name
+$ cd project_name/
 $ npm install
 $ bower i
 $ gulp
@@ -19,3 +20,11 @@ $ gulp
 gulp/tasks/styles.coffee
 `sass()` をコメントアウトして代わりに `$.compass()` を有効にする。
 config.rbは別途用意すること。
+
+
+## browserifyを使う
+
+[browserify](http://browserify.org/)
+
+gulpfile.coffee
+`coffee` タスクを `browserify` に置き換えて使えます。

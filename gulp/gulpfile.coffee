@@ -29,14 +29,14 @@ gulp.task 'serve', ['styles'], () ->
 
     gulp.watch([config.path.htdocs + '**/*.html'], reload)
     gulp.watch([config.path.scss + '**/*.scss'], ['styles', reload])
-    gulp.watch([config.path.coffee + '**/*.coffee'], ['browserify', reload])
+    gulp.watch([config.path.coffee + '**/*.coffee'], ['coffee', reload])
 
 
 # Build Production Files, the Default Task
 gulp.task 'default', (cb) ->
     runSequence(
         'styles',
-        'browserify',
+        'coffee',
         'serve',
         cb
     )
@@ -44,7 +44,7 @@ gulp.task 'default', (cb) ->
 gulp.task 'deploy', (cb) ->
     runSequence(
         'styles',
-        'browserify',
+        'coffee',
         'clean',
         'copy',
         'jshint'
