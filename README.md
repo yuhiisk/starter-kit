@@ -10,6 +10,7 @@ node.jsを事前にインストールすること。
 $ npm install -g gulp
 $ mkdir project_name
 $ cd project_name/
+$ git clone https://github.com/yuhiisk/utility.git ./
 $ npm install
 $ bower i
 $ gulp
