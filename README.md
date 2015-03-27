@@ -38,7 +38,7 @@ gulpfile.coffee
 
 ## CSSスプライトを使う
 
-src/img/sprite/ にフォルダを分けて配置する。
+`src/assets/img/sprite/` にフォルダを分けて配置する。
 フォルダごとに scss と スプライト画像が生成されます。
 
 ```
