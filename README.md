@@ -1,4 +1,4 @@
-utility
+starter-kit
 =======
 
 フロントエンドスターターキット。

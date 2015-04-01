@@ -3,74 +3,77 @@
 #
 
 ((win, doc) ->
-'use strict'
+    'use strict'
 
-class EventDispatcher
+    class EventDispatcher
 
-    constructor: () ->
-        @_events = {}
+        constructor: () ->
+            @_events = {}
 
-    hasEventListener: (eventName) ->
-        return !!this._events[eventName]
+        hasEventListener: (eventName) ->
+            return !!this._events[eventName]
 
-    addEventListener: (eventName, callback) ->
-        if @hasEventListener(eventName)
-            events = @_events[eventName]
+        addEventListener: (eventName, callback) ->
+            if @hasEventListener(eventName)
+                events = @_events[eventName]
 
-            for i in events
-                if events[i] is callback
-                    return
+                for i in events
+                    if events[i] is callback
+                        return
 
-            events.push(callback)
-        else
-            @_events[eventName] = [callback]
+                events.push(callback)
+            else
+                @_events[eventName] = [callback]
 
-        @
+            @
 
-    removeEventListener: (eventName, callback) ->
-        if !@hasEventListener(eventName)
-            return
-        else
-            events = this._events[eventName]
-            i = events.length
-            index = 0
+        removeEventListener: (eventName, callback) ->
+            if !@hasEventListener(eventName)
+                return
+            else
+                events = this._events[eventName]
+                i = events.length
+                index = 0
 
-            while i--
-                if events[i] is callback
-                    index = i
+                while i--
+                    if events[i] is callback
+                        index = i
 
-            events.splice(index, i)
+                events.splice(index, i)
 
-        @
+            @
 
-    fireEvent: (eventName, opt_this) ->
-        if !this.hasEventListener(eventName)
-            return
-        else
-            events = @_events[eventName]
-            copyEvents = @merge([], events)
-            arg = @merge([], arguments)
+        fireEvent: (eventName, opt_this) ->
+            if !this.hasEventListener(eventName)
+                return
+            else
+                events = @_events[eventName]
+                copyEvents = @merge([], events)
+                arg = @merge([], arguments)
 
-            arg.splice(0, 2)
+                arg.splice(0, 2)
 
-            for event in copyEvents
-                event.apply(opt_this || @, arg)
+                for event in copyEvents
+                    event.apply(opt_this || @, arg)
 
-    merge: (first, second) ->
-        len = +second.length
-        j = 0
-        i = first.length
+        merge: (first, second) ->
+            len = +second.length
+            j = 0
+            i = first.length
 
-        while j < len
-            first[i++] = second[j++]
-
-        # support IE<9
-        if len isnt len
-            while second[j] isnt undefined
+            while j < len
                 first[i++] = second[j++]
 
-        first.length = i
+            # support IE<9
+            if len isnt len
+                while second[j] isnt undefined
+                    first[i++] = second[j++]
 
-        return first
+            first.length = i
+
+            return first
+
+    # module.exports = EventDispatcher
+    win.EventDispatcher = EventDispatcher
 
 ) window, window.document
