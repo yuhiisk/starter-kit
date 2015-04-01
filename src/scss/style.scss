@@ -14,11 +14,8 @@
 @import
     "mixin/all",
     "function/func";
-// normalize and original reset
-@import
-    "reset/normalize",
-    "reset/reset";
-
+// reset css
+@import "reset/reset";
 
 // Component files
 // ==========================================================================
