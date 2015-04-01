@@ -1,6 +1,8 @@
 #
 #  EventDispatcher
 #
+
+((win, doc) ->
 'use strict'
 
 class EventDispatcher
@@ -51,8 +53,8 @@ class EventDispatcher
 
             arg.splice(0, 2)
 
-            for i in copyEvents
-                copyEvents[i].apply(opt_this || @, arg)
+            for event in copyEvents
+                event.apply(opt_this || @, arg)
 
     merge: (first, second) ->
         len = +second.length
@@ -71,5 +73,4 @@ class EventDispatcher
 
         return first
 
-
-module.exports = EventDispatcher
+) window, window.document
