@@ -12,7 +12,6 @@ $ mkdir project_name
 $ cd project_name/
 $ git clone https://github.com/yuhiisk/starter-kit.git ./
 $ npm install
-$ bower install
 $ gulp
 ```
 
