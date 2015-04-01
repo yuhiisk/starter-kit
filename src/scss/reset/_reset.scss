@@ -713,8 +713,21 @@
     Reset
     ========================================================================== */
 
+    /* HTML5 display definitions
+       ========================================================================== */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, main, menu, nav,
+    section, summary {
+        display: block;
+    }
+
+    audio, canvas, progress, video {
+        display: inline-block;
+        vertical-align: baseline;
+    }
+
     /* Resetting default margin and padding
-    ========================================================================== */
+       ========================================================================== */
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
@@ -738,8 +751,10 @@
 
 
     /* HTML, Body, Anchor
-    ========================================================================== */
+       ========================================================================== */
     html {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
         line-height: 1;
     }
 
@@ -762,25 +777,28 @@
 
 
     /* Paragraph
-    ========================================================================== */
+       ========================================================================== */
     p {
         margin-bottom: $baseMargin;
     }
 
 
     /* List
-    ========================================================================== */
+       ========================================================================== */
     ol, ul {
         list-style: none;
     }
 
     /* Table
-    ========================================================================== */
+       ========================================================================== */
     table {
         font-size: inherit;
         font-family: inherit;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
     caption, th, td {
+        padding: 0;
         text-align: left;
         font-weight: normal;
         vertical-align: top;
@@ -788,7 +806,7 @@
 
 
     /* Form
-    ========================================================================== */
+       ========================================================================== */
     fieldset { border: none; }
     input, textarea, select, label {
         vertical-align: middle;
@@ -796,9 +814,18 @@
     textarea { overflow: auto; }
     legend { display: none; }
 
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        color: inherit;
+        font: inherit;
+    }
+
 
     /* Embedded
-    ========================================================================== */
+       ========================================================================== */
     img {
         vertical-align: bottom;
         @include disabled-select-drag;
@@ -817,7 +844,7 @@
     }
 
     /* Other
-    ========================================================================== */
+       ========================================================================== */
     em {
         font-weight: bold;
         font-style: normal;
