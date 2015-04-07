@@ -22,7 +22,10 @@ gulp.task 'styles', () ->
         #     css: 'css',
         #     sass: 'scss'
         # }))
-        .on('error', console.error.bind(console))
+        .on('error', (e) ->
+            console.error(e)
+            @emit("end")
+        )
         .pipe($.autoprefixer({ browsers: config.autoprefixer }))
         # .pipe(gulp.dest('.tmp/scss'))
         .pipe(gulp.dest(config.path.css))
