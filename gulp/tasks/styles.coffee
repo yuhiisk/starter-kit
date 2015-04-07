@@ -18,9 +18,9 @@ gulp.task 'styles', () ->
         }))
         # Use compass
         # .pipe($.compass({
-        #     config_file: './config.rb',
-        #     css: 'css',
-        #     sass: 'scss'
+        #     css: config.path.css
+        #     sass: config.path.scss
+        #     image: config.path.image
         # }))
         .on('error', (e) ->
             console.error(e)
