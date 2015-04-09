@@ -12,6 +12,7 @@ runSequence = require 'run-sequence'
 browserSync = require 'browser-sync'
 reload = browserSync.reload
 
+gulp.task 'build', ['styles', 'coffee']
 
 # Watch Files For Changes & Reload
 gulp.task 'serve', ['styles'], () ->
@@ -36,16 +37,14 @@ gulp.task 'serve', ['styles'], () ->
 # Build Production Files, the Default Task
 gulp.task 'default', (cb) ->
     runSequence(
-        'styles',
-        'coffee',
+        'build',
         'serve',
         cb
     )
 
 gulp.task 'deploy', (cb) ->
     runSequence(
-        'styles',
-        'coffee',
+        'build',
         'clean',
         'copy',
         'jshint'
