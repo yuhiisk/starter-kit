@@ -15,7 +15,7 @@ reload = browserSync.reload
 gulp.task 'build', ['styles', 'coffee']
 
 # Watch Files For Changes & Reload
-gulp.task 'serve', ['styles'], () ->
+gulp.task 'serve', () ->
     browserSync(
         notify: false,
         # Customize the BrowserSync console logging prefix
