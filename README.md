@@ -4,14 +4,27 @@ starter-kit
 フロントエンドスターターキット。
 node.jsを事前にインストールすること。
 
-## gulpをインストール
+## インストール方法
 
+### gulpをインストール
 ```
 $ npm install -g gulp
+```
+
+### リポジトリをclone
+```
 $ mkdir project_name
 $ cd project_name/
 $ git clone https://github.com/yuhiisk/starter-kit.git ./
+```
+
+### npmモジュールをインストール
+```
 $ npm install
+```
+
+### タスクの実行
+```
 $ gulp
 ```
 
