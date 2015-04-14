@@ -1,7 +1,7 @@
 {
   "name": "starter-kit",
   "version": "1.0.0",
-  "description": "original starter kit",
+  "description": "Web-Frontend starter kit",
   "main": "gulpfile.coffee",
   "scripts": {
     "test": "."
@@ -58,6 +58,5 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "scripts": {
-    "postinstall": "bower install"
   }
 }
