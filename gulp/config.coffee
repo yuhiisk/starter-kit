@@ -24,6 +24,7 @@ module.exports =
         'scss': dev + 'scss/'
         'js': assets + 'js/',
         'coffee': dev + 'coffee/',
+        'jade': dev + 'jade/',
         'image': assets + 'img/',
         'sprite': assets + 'img/sprite/',
         'fonts': assets + 'fonts/',
