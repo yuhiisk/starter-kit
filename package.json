@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Web-Frontend starter kit",
   "main": "gulpfile.coffee",
-  "scripts": {
-    "test": "."
-  },
+  "scripts": {},
   "keywords": [
     "gulp"
   ],
@@ -30,6 +28,7 @@
     "gulp-cache": "^0.2.4",
     "gulp-changed": "^1.0.0",
     "gulp-coffee": "^2.2.0",
+    "gulp-compass": "^2.0.4",
     "gulp-concat": "^2.4.1",
     "gulp-csscomb": "^3.0.3",
     "gulp-csso": "^0.2.9",
@@ -56,7 +55,5 @@
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.1",
     "vinyl-source-stream": "^1.0.0"
-  },
-  "scripts": {
   }
 }
