@@ -37,10 +37,9 @@ $ gulp minify (※工事中)
 
 ## Compassを使う
 
-gulp/tasks/styles.coffee
-`sass()` をコメントアウトして代わりに `$.compass()` を有効にする。
-config.rbは別途用意すること。
-
+gulpfile.coffee
+`styles` タスクの代わりに `compass` タスクを使用する。
+`@import 'compass';` を忘れないこと。
 
 ## browserifyを使う
 
