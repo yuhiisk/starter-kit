@@ -54,6 +54,7 @@
     "main-bower-files": "^2.1.0",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.1",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-source-stream": "^1.0.0",
+    "gulp-awspublish": "^2.0.0"
   }
 }
