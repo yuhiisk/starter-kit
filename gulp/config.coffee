@@ -16,6 +16,7 @@ AUTOPREFIXER_BROWSERS = [
 ]
 
 module.exports =
+    # directory path
     path:
         'htdocs': dev,
         'assets': assets,
@@ -31,7 +32,6 @@ module.exports =
 
         'docs': dev + 'docs/'
 
-    autoprefixer: AUTOPREFIXER_BROWSERS
 
     # entry point
     entry:
@@ -44,3 +44,24 @@ module.exports =
         'css': 'style.css'
         'js': 'script.js'
 
+    # task configs    
+    autoprefixer: AUTOPREFIXER_BROWSERS
+    modernizr:
+        filename: 'modernizr.min.js'
+        options: [
+            "setClasses",
+            "addTest",
+            "html5shiv",
+            "testProp",
+            "fnBind"
+        ]
+        tests: [
+            "csstransitions",
+            "opacity",
+            "canvas",
+            "webgl",
+            "es5undefined",
+            "es5function",
+            "es5syntax",
+            "es6math",
+        ]
