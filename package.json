@@ -25,9 +25,11 @@
     "glob": "^5.0.1",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^1.0.1",
+    "gulp-awspublish": "^2.0.0",
     "gulp-cache": "^0.2.4",
     "gulp-changed": "^1.0.0",
     "gulp-coffee": "^2.2.0",
+    "gulp-coffeelint": "^0.5.0",
     "gulp-compass": "^2.0.4",
     "gulp-concat": "^2.4.1",
     "gulp-csscomb": "^3.0.3",
@@ -54,7 +56,6 @@
     "main-bower-files": "^2.1.0",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.1",
-    "vinyl-source-stream": "^1.0.0",
-    "gulp-awspublish": "^2.0.0"
+    "vinyl-source-stream": "^1.0.0"
   }
 }

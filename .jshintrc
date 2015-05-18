@@ -25,7 +25,6 @@
 	"worker"    : true,
 
 	"globals"   : {
-		"_"     : false,
-		"Backbone": false
+		"_"     : false
 	}
 }
