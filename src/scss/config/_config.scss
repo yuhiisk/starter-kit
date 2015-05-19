@@ -3,6 +3,14 @@
 // Global config file
 // ==========================================================================
 
+// Paths
+// ==========================================================================
+$http-path: "http://";
+$css-dir: "css";
+$image-dir: "img";
+$fonts-dir: "fonts";
+$hierarchy-of-img-from-css: '../'; 
+
 // Reset type
 // ==========================================================================
 // "html5doctor", "ericmeyer", "yui", "normalize", "original"

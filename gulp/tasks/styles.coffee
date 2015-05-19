@@ -12,6 +12,7 @@ gulp.task 'styles', () ->
         .pipe($.plumber())
         .pipe($.changed('styles', { extension: '.scss' }))
         .pipe(sass({
+            require: "#{config.path.scss}extension/function.rb",
             style: 'expanded',
             precision: 10,
             sourcemap: false

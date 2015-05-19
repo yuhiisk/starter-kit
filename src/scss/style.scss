@@ -12,8 +12,8 @@
     "config/config";
 // original mixins and functions
 @import
-    "mixin/all",
-    "function/func";
+    "mixin/import",
+    "function/import";
 // reset css
 @import "reset/reset";
 

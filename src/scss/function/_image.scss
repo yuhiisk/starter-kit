@@ -1,0 +1,48 @@
+// ==========================================================================
+// Functions
+// ==========================================================================
+
+//
+// local-path
+// @return {string} file path
+// ==========================================================================
+@function local-path($path) {
+    @return unquote("/#{$path}");
+}
+
+//
+// relative-path
+// @return {string} file path
+// ==========================================================================
+@function relative-path($path) {
+    @return unquote("#{$hierarchy-of-img-from-css}#{$image-dir}/#{$path}");
+}
+
+//
+// absolute-path
+// @return {string} file path
+// ==========================================================================
+@function absolute-path($path) {
+    @return unquote("#{$http-path}/#{$image-dir}/#{$path}");
+}
+
+//
+// image-url
+// @return {string} file path
+// ==========================================================================
+@function image-url($path, $option: null, $only-path: null) {
+    $url: '';
+    @if $option == 'local' or $option == null {
+        $url: local-path($path);        
+    } @else if $option == 'relative' {
+        $url: relative-path($path);        
+    } @else if $option == 'absolute' {
+        $url: absolute-path($path);        
+    }
+    
+    @if $only-path == true {
+        @return $url;
+    } @else {
+        @return unquote("url(#{$url})");        
+    }
+}
