@@ -1,12 +1,6 @@
 // ==========================================================================
-//   index
+// Functions
 // ==========================================================================
-.index {}
-
-.escape:before {
-	content: escape("⇒");
-}
-
-.image-url {
-	background-image: image-url("sprite/star/blue.png");
-}
+@import
+	"function/text",
+	"function/image";
