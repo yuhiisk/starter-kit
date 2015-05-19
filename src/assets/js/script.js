@@ -1,38 +1,22 @@
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
 (function(win, doc) {
   'use strict';
   var Test, test;
-  Test = (function(_super) {
-    __extends(Test, _super);
-
+  Test = (function() {
     function Test() {
       this.initialize();
     }
 
-    Test.prototype.initialize = function() {
-      return EventDispatcher.call(this);
+    Test.prototype.initialize = function(name) {
+      this.name = name != null ? name : 'Hello World!';
+      return this.hello(this.name);
     };
 
-    Test.prototype.say = function(str) {
-      return this.fireEvent('say');
-    };
-
-    Test.prototype.done = function() {
-      return this.fireEvent('done', this, ['done!done!done!']);
+    Test.prototype.hello = function(str) {
+      return console.log(str);
     };
 
     return Test;
 
-  })(EventDispatcher);
-  test = new Test();
-  test.addEventListener('say', function() {
-    return console.log('fire say()');
-  });
-  test.addEventListener('done', function(e) {
-    return console.log('fire done()', e);
-  });
-  test.say();
-  return test.done();
+  })();
+  return test = new Test();
 })(window, window.document);
