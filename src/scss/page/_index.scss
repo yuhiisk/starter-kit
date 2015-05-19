@@ -3,10 +3,10 @@
 // ==========================================================================
 .index {}
 
-.escape:before {
-	content: escape("⇒");
-}
-
 .image-url {
 	background-image: image-url("sprite/star/blue.png");
+}
+
+.reverse {
+	content: reverse('yatta-');
 }

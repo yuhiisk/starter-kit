@@ -219,10 +219,10 @@ code, pre {
   width: 100%;
 }
 
-.escape:before {
-  content: "\\21D2";
-}
-
 .image-url {
   background-image: url(/sprite/star/blue.png);
+}
+
+.reverse {
+  content: "-attay";
 }
