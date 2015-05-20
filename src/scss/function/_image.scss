@@ -46,3 +46,11 @@
         @return unquote("url(#{$url})");        
     }
 }
+
+//
+// image-url
+// @return {string} file path
+// ==========================================================================
+@function base64($path) {
+    @return url64('assets/' + $image-dir + '/' + $path);
+}
