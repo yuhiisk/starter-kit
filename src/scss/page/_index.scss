@@ -6,3 +6,7 @@
 .image-url {
 	background-image: image-url("sprite/star/blue.png");
 }
+
+.inline-image {
+	background-image: base64("sprite/star/blue.png");
+}

@@ -48,7 +48,8 @@ gulp.task 'deploy', (cb) ->
         'build',
         'clean',
         'copy',
-        'coffeelint'
+        'coffeelint',
+        'stylestats',
         cb
     )
 
