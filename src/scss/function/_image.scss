@@ -7,7 +7,7 @@
 // @return {string} file path
 // ==========================================================================
 @function local-path($path) {
-    @return unquote("/#{$path}");
+    @return unquote("/#{$image-dir}/#{$path}");
 }
 
 //
@@ -33,17 +33,17 @@
 @function image-url($path, $option: null, $only-path: null) {
     $url: '';
     @if $option == 'local' or $option == null {
-        $url: local-path($path);        
+        $url: local-path($path);
     } @else if $option == 'relative' {
-        $url: relative-path($path);        
+        $url: relative-path($path);
     } @else if $option == 'absolute' {
-        $url: absolute-path($path);        
+        $url: absolute-path($path);
     }
-    
+
     @if $only-path == true {
         @return $url;
     } @else {
-        @return unquote("url(#{$url})");        
+        @return unquote("url(#{$url})");
     }
 }
 
