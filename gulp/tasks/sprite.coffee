@@ -21,12 +21,12 @@ createSpriteTask = (filePath) ->
         spriteData.css.pipe(gulp.dest(config.path.scss))
     return taskName
 
-paths = glob.sync config.path.sprite + '**/*.png'
+paths = glob.sync(config.path.sprite + '**/*.png')
 
-taskNames = _ paths
-    .map (path) -> path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/)
-    .uniq (filePath) -> filePath[2]
-    .map createSpriteTask
+taskNames = _(paths)
+    .map((path) -> path.match(/^(.+\/)(.+?)(\/.+?\..+?)$/))
+    .uniq((filePath) -> filePath[2])
+    .map(createSpriteTask)
     .value()
 
-gulp.task "sprite", taskNames
+gulp.task('sprite', taskNames)

@@ -1,12 +1,16 @@
 {
   "name": "starter-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Web-Frontend starter kit",
   "main": "gulpfile.coffee",
-  "scripts": {},
   "keywords": [
-    "gulp"
+    "gulp",
+    "starter-kit"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yuhiisk/starter-kit.git"
+  },
   "author": "Youhei Isokawa",
   "license": "MIT",
   "browserify": {
@@ -15,6 +19,7 @@
       "debowerify"
     ]
   },
+  "dependencies": {},
   "devDependencies": {
     "browser-sync": "^1.5.2",
     "browserify": "^9.0.3",
@@ -59,5 +64,17 @@
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.1",
     "vinyl-source-stream": "^1.0.0"
+  },
+  "scripts": {
+    "start": "gulp serve",
+    "publish": "gulp publish",
+    "server": "gulp serve",
+    "style": "gulp style",
+    "sprite": "gulp sprite",
+    "minify": "gulp minify",
+    "test": "gulp stylestats"
+  },
+  "config": {
+    "port": "8080"
   }
 }

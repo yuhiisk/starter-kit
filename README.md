@@ -60,3 +60,8 @@ $ gulp sprite-[フォルダ名] # フォルダ単位でスプライトを生成
 
 生成されたscssはimportして使用する。
 詳しくは `src/scss/module/sprite-map.scss` を参照。
+
+## Change log
+
+- 2015-08-15 
+- 2015-03-30 v1.0.0 release.

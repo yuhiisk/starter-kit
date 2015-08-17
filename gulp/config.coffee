@@ -1,7 +1,6 @@
 root = './'
-dev = './src/'
-assets = dev + 'assets/'
-dist = './dist/'
+src = "#{root}src/"
+dist = "#{root}dist/" # distribution
 
 AUTOPREFIXER_BROWSERS = [
     'ie >= 8',
@@ -16,22 +15,22 @@ AUTOPREFIXER_BROWSERS = [
 ]
 
 module.exports =
+
     # directory path
     path:
-        'htdocs': dev,
-        'assets': assets,
+        'htdocs': dist,
+
         'dist': dist,
-        'css': assets + 'css/',
-        'scss': dev + 'scss/'
-        'js': assets + 'js/',
-        'coffee': dev + 'coffee/',
-        'jade': dev + 'jade/',
-        'image': assets + 'img/',
-        'sprite': assets + 'img/sprite/',
-        'fonts': assets + 'fonts/',
+        'css': dist + 'css/',
+        'js': dist + 'js/',
+        'image': dist + 'img/',
 
-        'docs': dev + 'docs/'
-
+        'scss': src + 'scss/'
+        'coffee': src + 'coffee/',
+        'jade': src + 'jade/',
+        'sprite': src + 'sprite/',
+        'fonts': src + 'fonts/',
+        # 'docs': src + 'docs/'
 
     # entry point
     entry:
@@ -44,7 +43,7 @@ module.exports =
         'css': 'style.css'
         'js': 'script.js'
 
-    # task configs    
+    # task configs
     autoprefixer: AUTOPREFIXER_BROWSERS
     modernizr:
         filename: 'modernizr.min.js'
