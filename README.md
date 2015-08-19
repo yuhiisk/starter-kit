@@ -80,9 +80,3 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 - 2015-08-19 v1.1.0 release.
 - 2015-03-30 v1.0.0 release.
-
-## ディレクトリを指定してコンパイル
-```
-src/sp/ を dist/sp/ へ吐き出し
-$ npm start -- -sp
-```
