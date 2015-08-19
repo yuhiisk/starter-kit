@@ -4,7 +4,9 @@ $ = (require 'gulp-load-plugins')()
 
 # Optimize Images
 gulp.task 'imagemin', () ->
-    return gulp.src(config.path.image + '**/*')
+    return gulp.src([
+        config.path.image + '**/*'
+    ])
         .pipe($.cache($.imagemin({
             progressive: true,
             interlaced: true

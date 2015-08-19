@@ -187,6 +187,73 @@ code, pre {
   font-family: monospace;
 }
 
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+@include sprites($spritesheet-sprites);
+*/
+.star-blue, .star-orange, .star-pink, .star-yellow {
+  display: inline-block;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 110%;
+  line-height: 1;
+}
+
+.star-blue {
+  background-image: url(../img/star.png);
+  background-position: 0px 0px;
+  width: 22px;
+  height: 22px;
+}
+
+.star-orange {
+  background-image: url(../img/star.png);
+  background-position: -26px 0px;
+  width: 22px;
+  height: 22px;
+}
+
+.star-pink {
+  background-image: url(../img/star.png);
+  background-position: 0px -26px;
+  width: 22px;
+  height: 22px;
+}
+
+.star-yellow {
+  background-image: url(../img/star.png);
+  background-position: -26px -26px;
+  width: 22px;
+  height: 22px;
+}
+
 .container {
   max-width: 640px;
   margin: 0 auto;
@@ -217,12 +284,4 @@ code, pre {
 .is-fixed {
   position: fixed;
   width: 100%;
-}
-
-.image-url {
-  background-image: url(/img/sprite/star/blue.png);
-}
-
-.inline-image {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAqUlEQVR42q2TsQ3DMAwEvQqn0QhpuQw3UpEi03CRpPlCCAjnQtDAASqk84N6XfR7vJ5LXAQtEFvMiZX0LdakOA9xToldwhNHYp6Wp2Zpa5yKTRcTun0lvSW1N3TWTnEACUauUNJxsZ1jyCnp94xXV1g9HtACjP+qWzSkQXuc/8wVP5BGYiS2htiIeHXaQMR+M8sEjcCtyPOg1tlpxa6Fov7BZoklhHiV+AMCcS2DDRl6EwAAAABJRU5ErkJggg==);
 }
