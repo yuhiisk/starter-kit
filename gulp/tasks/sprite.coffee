@@ -12,7 +12,7 @@ createSpriteTask = (filePath) ->
             .pipe($.plumber())
             .pipe($.spritesmith({
                 imgName: filePath[2] + '.png',
-                cssName: filePath[2] + '.scss',
+                cssName: '_' + filePath[2] + '.scss',
                 imgPath: '../img/' + filePath[2] + '.png'
                 algorithm: 'binary-tree'
                 padding: 4

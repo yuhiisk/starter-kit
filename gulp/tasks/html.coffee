@@ -6,7 +6,9 @@ $ = (require 'gulp-load-plugins')()
 gulp.task 'html', () ->
     assets = $.useref.assets({ searchPath: '{.tmp,' + config.path.htdocs + '}' })
 
-    return gulp.src(config.path.htdocs + '**/*.html')
+    return gulp.src([
+        config.path.htdocs + '**/*.html',
+    ])
         .pipe($.plumber())
         .pipe(assets)
         # Concatenate And Minify JavaScript

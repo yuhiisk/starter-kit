@@ -66,15 +66,12 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "scripts": {
-    "start": "gulp serve",
+    "start": "gulp",
+    "deploy": "gulp deploy",
+    "minify": "gulp minify",
     "publish": "gulp publish",
     "server": "gulp serve",
-    "style": "gulp style",
     "sprite": "gulp sprite",
-    "minify": "gulp minify",
     "test": "gulp stylestats"
-  },
-  "config": {
-    "port": "8080"
   }
 }
