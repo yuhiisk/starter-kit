@@ -72,6 +72,7 @@
     "publish": "gulp publish",
     "server": "gulp serve",
     "sprite": "gulp sprite",
-    "test": "gulp stylestats"
+    "test": "gulp stylestats",
+    "preinstall": "git submodule init && git submodule update"
   }
 }
