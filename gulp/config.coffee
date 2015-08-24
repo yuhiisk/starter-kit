@@ -1,74 +1,68 @@
 # Autoprefixer
 AUTOPREFIXER_BROWSERS = [
-    'ie >= 8',
-    'ie_mob >= 10',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
-    'opera >= 23',
-    'ios >= 7',
-    'android >= 4.4',
-    'bb >= 10'
+    "ie >= 8",
+    "ie_mob >= 10",
+    "ff >= 30",
+    "chrome >= 34",
+    "safari >= 7",
+    "opera >= 23",
+    "ios >= 7",
+    "android >= 4.4",
+    "bb >= 10"
 ]
 
 # Device type
-typeStr = '%type%'
+typeStr = "%type%"
+typeDist = "%type_dir%"
 
 # Directory
-root = './'
-src = "#{root}src/#{typeStr}/"
-dist = "#{root}dist/#{typeStr}/"
-common = "#{root}dist/common/"
-src_common = "#{root}src/common/"
+root = "./"
+src = "#{root}src/"
+dist = "#{root}dist/"
+# common = "#{root}dist/common/"
+# src_common = "#{root}src/common/"
 
 config =
+    DEFAULT_TYPE: "pc"
+    distTypeDir: ""
     # directory path
     path:
         # document root
-        'htdocs' : dist
+        "htdocs" : dist + "#{typeDist}/"
         # distribution
-        'dist'   : dist
-        'css'    : dist + 'css/'
-        'js'     : dist + 'js/'
-        'image'  : dist + 'img/'
-        'common' : dist + 'common/'
+        "dist"   : dist + "#{typeDist}/"
+        "css"    : dist + "#{typeDist}/css/"
+        "js"     : dist + "#{typeDist}/js/"
+        "image"  : dist + "#{typeDist}/img/"
         # sources
-        'src'    : src
-        'scss'   : src + 'scss/'
-        'coffee' : src + 'coffee/'
-        'jade'   : src + 'jade/'
-        'sprite' : src + 'sprite/'
-        'fonts'  : src + 'fonts/'
-        # common
-        'src_common':
-            'src'    : src_common
-            'scss'   : src_common + 'scss/'
-            'coffee' : src_common + 'coffee/'
-            'jade'   : src_common + 'jade/'
-            'sprite' : src_common + 'sprite/'
-            'fonts'  : src_common + 'fonts/'
+        "src"   : src
+        "scss"   : src + "scss/#{typeStr}/"
+        "coffee" : src + "coffee/#{typeStr}/"
+        "jade"   : src + "jade/#{typeStr}/"
+        "sprite" : src + "sprite/#{typeStr}/"
+        "fonts"  : src + "fonts/#{typeStr}/"
 
-        # 'docs': src + 'docs/'
+        # "docs": src + "docs/'
 
     # entry point
     entry:
-        'css'    : 'style.css'
-        'js'     : 'script.js'
-        'coffee' : 'script.coffee'
+        "css"    : "style.css"
+        "js"     : "script.js"
+        "coffee" : "script.coffee"
 
     # after compile name
     name:
-        'css' : 'style.css'
-        'js'  : 'script.js'
+        "css" : "style.css"
+        "js"  : "script.js"
 
     # sass option
     sass:
-        lib: './src/common/scss/extension/function.rb'
+        lib: "./src/scss/extension/function.rb"
 
     # task configs
     autoprefixer: AUTOPREFIXER_BROWSERS
     modernizr:
-        filename: 'modernizr.min.js'
+        filename: "modernizr.min.js"
         options: [
             "setClasses",
             "addTest",

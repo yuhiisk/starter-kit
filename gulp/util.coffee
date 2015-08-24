@@ -19,32 +19,37 @@ getType = (args) ->
         return /^-(?!-)+/.test(val)
     )
     if result then return result.replace(/^-/, '')
-    return ''
+    return config.DEFAULT_TYPE
 
 TYPE = getType(process.argv)
-TYPE_REG =
-    if TYPE isnt ''
-        /%type%/g
+TYPE_REG = /%type%/g
+TYPE_DIST_REG =
+    if TYPE isnt config.DEFAULT_TYPE
+        /%type_dir%/g
     else
         # TYPEが空
-        /%type%\//g
+        /%type_dir%\//g
 
 ###
  * パスをタイプに合わせて書きかえる
  * @param data
  * @returns {}
 ###
-buildPath = (data) ->
+buildPath = (data, reg, replaceStr) ->
     if typeof data is 'number' then return data
-    if typeof data is 'string' then return data.replace(TYPE_REG, TYPE)
+    if typeof data is 'string' then return data.replace(reg, replaceStr)
 
     for key of data
         value = data[key]
         delete data[key]
-        data[buildPath(key)] = buildPath(value)
+        data[buildPath(key, reg, replaceStr)] = buildPath(value, reg, replaceStr)
 
     return data
 
-buildPath(config.path)
+if config.DEFAULT_TYPE is TYPE
+    buildPath(config.path, TYPE_DIST_REG, '')
+else
+    buildPath(config.path, TYPE_DIST_REG, TYPE)
+buildPath(config.path, TYPE_REG, TYPE)
 config.TYPE = TYPE
 module.exports = config

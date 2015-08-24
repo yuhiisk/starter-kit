@@ -8,14 +8,6 @@ gulp.task 'copy', (dir) ->
         .pipe(gulp.dest(dir))
         .pipe($.size({ title: 'copy' }))
 
-gulp.task 'copy:common_html', () ->
-    gulp.src([ config.path.src_common.src ])
-        .pipe(gulp.dest(config.path.dist))
-
-    gulp.src([ "#{config.path.src_common.src}**/*.html" ])
-        .pipe(gulp.dest(config.path.common))
-        .pipe($.size({ title: 'copy:common_html' }))
-
 # gulp.task 'copy:docs', () ->
 #     gulp.src([])
 #         .pipe(gulp.dest())
