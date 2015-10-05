@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* ==========================================================================
    Reset
    ========================================================================== */
@@ -180,73 +179,10 @@ code, pre {
   clear: both;
 }
 
-p {
-  -ms-word-wrap: break-word;
-  word-break: break-word;
-  word-wrap: break-word;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  -ms-hyphens: auto;
-      hyphens: auto;
-  -webkit-hyphenate-before: 2;
-  -webkit-hyphenate-after: 3;
-  hyphenate-lines: 3;
-  -webkit-font-feature-settings: "liga", "dlig";
-  -moz-font-feature-settings: "liga=1, dlig=1";
-  -ms-font-feature-settings: "liga", "dlig";
-  font-feature-settings: "liga", "dlig";
-}
-
-body {
-  min-width: 0;
-  background-color: #fff;
-  color: #000;
-  font-size: 14px;
-  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Meiryo, "メイリオ", sans-serif;
-  line-height: 1.5;
-}
-
-a {
-  color: #0072ff;
-  text-decoration: none;
-}
-a:link, a:visited {
-  outline: 0;
-}
-a:hover, a:active {
-  color: #0072ff;
-  text-decoration: underline;
-}
-
-.global-header h1 {
-  font-size: 143%;
-  margin: 20px 0;
-}
-
-.global-footer .copyright {
-  margin: 20px 0;
-}
-
-.is-hidden {
-  display: none;
-}
-
-.is-fixed {
-  position: fixed;
-  width: 100%;
-}
-
 .get-url {
   url: url(../img/star.png);
 }
 
-@media print {
-  * {
-    background: transparent !important;
-    color: black !important;
-    text-shadow: none !important;
-    -webkit-filter: none !important;
-            filter: none !important;
-    -ms-filter: none !important;
-  }
+.sp {
+  content: "sp style";
 }
