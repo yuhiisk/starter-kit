@@ -15,6 +15,7 @@ if config.sass.lib
 gulp.task 'styles', () ->
     # For best performance, don't add Sass partials to `gulp.src`
     return gulp.src([
+        config.path.scss_common + '*.{sass,scss}',
         config.path.scss + '*.{sass,scss}'
     ])
         .pipe($.plumber())

@@ -1,18 +1,4 @@
 @charset "UTF-8";
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-/* clearfix */
-.clearfix:before, .clearfix:after {
-  content: " ";
-  display: table;
-}
-.clearfix:after {
-  clear: both;
-}
-
 /* ==========================================================================
    Reset
    ========================================================================== */
@@ -178,6 +164,20 @@ address, caption, cite, code, dfn, var {
 
 code, pre {
   font-family: monospace;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* clearfix */
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
 }
 
 p {
