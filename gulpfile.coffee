@@ -34,8 +34,12 @@ gulp.task 'serve', () ->
 
     # default
     gulp.watch([config.path.htdocs + '**/*.html'], reload)
-    gulp.watch([config.path.jade + '**.jade'], ['jade', reload])
-    gulp.watch([config.path.scss + '**/*.{scss,rb}'], ['styles', reload])
+    gulp.watch([config.path.jade + '**/*.jade'], ['jade', reload])
+    gulp.watch([
+        config.sass.lib,
+        config.path.scss_common + '**/*.scss',
+        config.path.scss + '**/*.scss'
+    ], ['styles', reload])
     # gulp.watch([config.path.js + '**/*.js'], [reload])
     gulp.watch([config.path.coffee + '**/*.coffee'], ['coffeelint', 'coffee', reload])
 

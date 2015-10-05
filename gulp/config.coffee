@@ -7,7 +7,7 @@ AUTOPREFIXER_BROWSERS = [
     "safari >= 7",
     "opera >= 23",
     "ios >= 7",
-    "android >= 4.4",
+    "android >= 4.0",
     "bb >= 10"
 ]
 
@@ -35,12 +35,13 @@ config =
         "js"     : dist + "#{typeDist}/js/"
         "image"  : dist + "#{typeDist}/img/"
         # sources
-        "src"   : src
-        "scss"   : src + "scss/#{typeStr}/"
-        "coffee" : src + "coffee/#{typeStr}/"
-        "jade"   : src + "jade/#{typeStr}/"
-        "sprite" : src + "sprite/#{typeStr}/"
-        "fonts"  : src + "fonts/#{typeStr}/"
+        "src"         : src
+        "scss_common" : src + "scss/common/"
+        "scss"        : src + "scss/#{typeStr}/"
+        "coffee"      : src + "coffee/#{typeStr}/"
+        "jade"        : src + "jade/#{typeStr}/"
+        "sprite"      : src + "sprite/#{typeStr}/"
+        "fonts"       : src + "fonts/#{typeStr}/"
 
         # "docs": src + "docs/'
 
