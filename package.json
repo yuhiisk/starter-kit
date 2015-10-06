@@ -21,8 +21,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^1.5.2",
-    "browserify": "^9.0.3",
+    "browser-sync": "^2.9.8",
+    "browserify": "^11.2.0",
     "coffee-script": "^1.9.1",
     "coffeeify": "^1.0.0",
     "debowerify": "^1.2.0",

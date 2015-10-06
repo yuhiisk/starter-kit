@@ -21,16 +21,20 @@ gulp.task 'build', ['styles', 'coffeelint', 'coffee']
 
 # Watch Files For Changes & Reload
 gulp.task 'serve', () ->
-    browserSync(
+    browserSync.init(
         notify: false,
         # Customize the BrowserSync console logging prefix
-        logPrefix: 'StarterKit',
+        logPrefix: 'Starter Kit',
         # Run as an https by uncommenting 'https: true'
         # Note: this uses an unsigned certificate which on first access
         #       will present a certificate warning in the browser.
         # https: true,
-        # host: '192.168.0.0',
-        server: [config.path.htdocs]
+        # host: '192.168.1.1',
+        # port: 3000,
+        server:
+            baseDir: [ config.path.htdocs ]
+            index: 'index.html'
+            # routes:
     )
 
     # default
