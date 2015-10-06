@@ -11,6 +11,7 @@ try
 catch err
     console.error err
 
+$ = (require 'gulp-load-plugins')()
 runSequence = require 'run-sequence'
 browserSync = require 'browser-sync'
 reload = browserSync.reload
@@ -33,15 +34,15 @@ gulp.task 'serve', () ->
     )
 
     # default
-    gulp.watch([config.path.htdocs + '**/*.html'], reload)
-    gulp.watch([config.path.jade + '**/*.jade'], ['jade', reload])
-    gulp.watch([
+    $.watch([config.path.htdocs + '**/*.html'], reload)
+    $.watch([config.path.jade + '**/*.jade'], -> runSequence('jade', reload))
+    $.watch([
         config.sass.lib,
         config.path.scss_common + '**/*.scss',
         config.path.scss + '**/*.scss'
-    ], ['styles', reload])
-    # gulp.watch([config.path.js + '**/*.js'], [reload])
-    gulp.watch([config.path.coffee + '**/*.coffee'], ['coffeelint', 'coffee', reload])
+    ], -> runSequence('styles', reload))
+    # $.watch([config.path.js + '**/*.js'], reload)
+    $.watch([config.path.coffee + '**/*.coffee'], -> runSequence('coffeelint', 'coffee', reload))
 
 # Build Production Files, the Default Task
 gulp.task 'default', (cb) ->
