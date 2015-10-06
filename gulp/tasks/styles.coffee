@@ -14,14 +14,13 @@ if config.sass.lib
 # Compile and Automatically Prefix Stylesheets
 gulp.task 'styles', () ->
     # For best performance, don't add Sass partials to `gulp.src`
-    return gulp.src([
-        config.path.scss_common + '*.{sass,scss}',
+    return sass([
         config.path.scss + '*.{sass,scss}'
-    ])
+    ], option)
         .pipe($.plumber())
         .pipe($.changed('styles', { extension: '.{sass,scss}' }))
-        .pipe(sass(option))
-        .on('error', console.error.bind(console))
+        #.on('error', console.error.bind(console))
+        .on('error', sass.logError)
         .pipe($.autoprefixer({ browsers: config.autoprefixer }))
         .pipe(gulp.dest(config.path.css))
         .pipe($.size({ title: 'styles' }))
