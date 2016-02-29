@@ -65,6 +65,6 @@
     "publish": "gulp publish",
     "server": "gulp serve",
     "sprite": "gulp sprite",
-    "inc": "git submodule init && git submodule update"
+    "include": "git submodule init && git submodule update"
   }
 }

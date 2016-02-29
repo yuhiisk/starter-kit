@@ -9,18 +9,16 @@ We were inspired by the [Google Web Starter Kit](http://developers.google.com/we
 Rough technology has been used for the following.
 
 - Gulp
-- Jade
-- Sass, Compass(Optional)
-- CoffeeScript
-- Spritesmith(CSS Sprite generator)
-- Stylestats
+- Sass
 - Autoprefixer
+- CoffeeScript
 - JSHint
 - Coffeelint
 - Browserify
 - Bower
 - BrowserSync
 - Modernizr(v3.0.0-alpha.4)
+- Spritesmith(CSS Sprite generator)
 - Each of the file type of minify, etc...
 
 These are scheduled to be updated in the future.
