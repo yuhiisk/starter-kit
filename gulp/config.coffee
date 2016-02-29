@@ -74,12 +74,7 @@ config =
         tests: [
             "csstransitions",
             "opacity",
-            "canvas",
-            "webgl",
-            "es5undefined",
-            "es5function",
-            "es5syntax",
-            "es6math",
+            "canvas"
         ]
 
 module.exports = config
