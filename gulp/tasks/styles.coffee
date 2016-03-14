@@ -8,8 +8,8 @@ option =
     precision: 10,
     sourcemap: false
 
-#if config.sass.lib?
-#    option.require = config.sass.lib
+if config.sass.lib
+    option.require = config.sass.lib
 
 # Compile and Automatically Prefix Stylesheets
 gulp.task 'styles', () ->
