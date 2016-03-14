@@ -6,7 +6,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "jquery": "2.1.4"
+    "jquery": "2.1.4",
+    "bootstrap-sass": "twbs-bootstrap-sass#^3.3.6"
   },
   "overrides": {
     "html5-boilerplate": {

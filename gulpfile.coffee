@@ -41,8 +41,6 @@ gulp.task 'serve', () ->
     $.watch([config.path.htdocs + '**/*.html'], reload)
     $.watch([config.path.jade + '**/*.jade'], -> runSequence('jade', reload))
     $.watch([
-        config.sass.lib,
-        config.path.scss_common + '**/*.scss',
         config.path.scss + '**/*.scss'
     ], -> runSequence('styles', reload))
     # $.watch([config.path.js + '**/*.js'], reload)
@@ -53,7 +51,7 @@ gulp.task 'default', (cb) ->
     runSequence('build', 'serve', cb)
 
 gulp.task 'deploy', (cb) ->
-    runSequence('build', 'coffeelint', 'stylestats', cb)
+    runSequence('build', 'coffeelint', cb)
 
 # gulp.task 'minify', (cb) ->
 #     runSequence('minify:html', 'minify:styles', 'minify:scripts', cb)

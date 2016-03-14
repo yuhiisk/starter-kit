@@ -57,8 +57,8 @@ config =
         "js"  : "script.js"
 
     # sass option
-    sass:
-        lib: "./src/scss/extension/function.rb"
+#    sass:
+#        lib: ./src/scss/extension/function.rb"
 
     # task configs
     autoprefixer: AUTOPREFIXER_BROWSERS

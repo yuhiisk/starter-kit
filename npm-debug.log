@@ -1,0 +1,44 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/yuhiisk/.nodebrew/node/v5.0.0/bin/node',
+1 verbose cli   '/Users/yuhiisk/.nodebrew/current/bin/npm',
+1 verbose cli   'start' ]
+2 info using npm@3.3.6
+3 info using node@v5.0.0
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle starter-kit@1.2.0~prestart: starter-kit@1.2.0
+6 silly lifecycle starter-kit@1.2.0~prestart: no script for prestart, continuing
+7 info lifecycle starter-kit@1.2.0~start: starter-kit@1.2.0
+8 verbose lifecycle starter-kit@1.2.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle starter-kit@1.2.0~start: PATH: /Users/yuhiisk/.nodebrew/node/v5.0.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/yuhiisk/Work/Github/bootstrap-customization/node_modules/.bin:/usr/local/heroku/bin:/Users/yuhiisk/.rbenv/bin:/Users/yuhiisk/.rbenv/shims:/Applications/MAMP/bin/php/php5.5.3/bin:/Applications/adt-bundle-mac-x86_64-20131030/sdk/platform-tools:/Users/yuhiisk/.nodebrew/current/bin:/usr/local/bin:/usr/local/sbin:/Users/yuhiisk/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin
+10 verbose lifecycle starter-kit@1.2.0~start: CWD: /Users/yuhiisk/Work/Github/bootstrap-customization
+11 silly lifecycle starter-kit@1.2.0~start: Args: [ '-c', 'gulp' ]
+12 silly lifecycle starter-kit@1.2.0~start: Returned: code: 1  signal: null
+13 info lifecycle starter-kit@1.2.0~start: Failed to exec start script
+14 verbose stack Error: starter-kit@1.2.0 start: `gulp`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/Users/yuhiisk/.nodebrew/node/v5.0.0/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+14 verbose stack     at emitTwo (events.js:87:13)
+14 verbose stack     at EventEmitter.emit (events.js:172:7)
+14 verbose stack     at ChildProcess.<anonymous> (/Users/yuhiisk/.nodebrew/node/v5.0.0/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:87:13)
+14 verbose stack     at ChildProcess.emit (events.js:172:7)
+14 verbose stack     at maybeClose (internal/child_process.js:818:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+15 verbose pkgid starter-kit@1.2.0
+16 verbose cwd /Users/yuhiisk/Work/Github/bootstrap-customization
+17 error Darwin 15.3.0
+18 error argv "/Users/yuhiisk/.nodebrew/node/v5.0.0/bin/node" "/Users/yuhiisk/.nodebrew/current/bin/npm" "start"
+19 error node v5.0.0
+20 error npm  v3.3.6
+21 error code ELIFECYCLE
+22 error starter-kit@1.2.0 start: `gulp`
+22 error Exit status 1
+23 error Failed at the starter-kit@1.2.0 start script 'gulp'.
+23 error This is most likely a problem with the starter-kit package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     gulp
+23 error You can get their info via:
+23 error     npm owner ls starter-kit
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
